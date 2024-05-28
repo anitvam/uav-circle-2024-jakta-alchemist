@@ -62,8 +62,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      file-name-root: "exported-data"
-      export-path: "data"
+      fileNameRoot: "exported-data"
+      interval: 10.0
+      exportPath: "data"
     data:
       - type: DistanceError
 

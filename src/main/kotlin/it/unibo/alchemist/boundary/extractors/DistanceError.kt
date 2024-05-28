@@ -10,9 +10,9 @@ import it.unibo.jakta.examples.swarm.SwarmPosition
 import kotlin.math.PI
 import kotlin.math.hypot
 
-class DistanceError<P : Position<P>>(
-    override val columnNames: List<String> = listOf("error"),
-) : AbstractDoubleExporter() {
+class DistanceError : AbstractDoubleExporter() {
+    override val columnNames: List<String> = listOf("error")
+
     override fun <T> extractData(
         environment: Environment<T, *>,
         reaction: Actionable<T>?,
