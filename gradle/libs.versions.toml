@@ -1,14 +1,33 @@
 [versions]
 alchemist = "34.0.6"
 kotlin = "2.0.0"
+jakta = "0.10.0"
+kotest = "5.9.0"
 
 [libraries]
 alchemist = { module = "it.unibo.alchemist:alchemist", version.ref = "alchemist" }
 alchemist-protelis = { module = "it.unibo.alchemist:alchemist-incarnation-protelis", version.ref = "alchemist" }
-alchemist-scafi = { module = "it.unibo.alchemist:alchemist-incarnation-scafi", version.ref = "alchemist" }
+alchemist-swingui = { module = "it.unibo.alchemist:alchemist-swingui", version.ref = "alchemist" }
+alchemist-ui-tooling = {module = "it.unibo.alchemist:alchemist-ui-tooling", version.ref = "alchemist" }
+alchemist-euclidean-geometry = {module = "it.unibo.alchemist:alchemist-euclidean-geometry", version.ref = "alchemist" }
+alchemist-maps = {module = "it.unibo.alchemist:alchemist-maps", version.ref = "alchemist" }
+alchemist-physics = {module = "it.unibo.alchemist:alchemist-physics", version.ref = "alchemist" }
+jakta = {module = "it.unibo.jakta:alchemist-jakta-incarnation", version.ref = "jakta"}
+kotest-junit5-jvm = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+
 
 [bundles]
 alchemist-protelis = [ "alchemist", "alchemist-protelis" ]
+alchemist-dev = [
+    "alchemist-euclidean-geometry",
+    "alchemist-maps",
+    "alchemist-physics",
+    "alchemist-ui-tooling",
+    "alchemist-swingui"
+]
+kotlin-testing = [ "kotest-junit5-jvm", "kotest-assertions-core-jvm" ]
+
 
 [plugins]
 gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version = "3.1.6" }

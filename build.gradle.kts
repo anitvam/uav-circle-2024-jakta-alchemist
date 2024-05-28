@@ -6,7 +6,6 @@ plugins {
     application
     alias(libs.plugins.gitSemVer)
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.qa)
     alias(libs.plugins.multiJvmTesting)
     alias(libs.plugins.taskTree)
 }
@@ -40,9 +39,17 @@ multiJvm {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(libs.bundles.alchemist.protelis)
+    implementation(libs.bundles.alchemist.dev)
     if (!GraphicsEnvironment.isHeadless()) {
         implementation("it.unibo.alchemist:alchemist-swingui:${libs.versions.alchemist.get()}")
+    }
+    implementation(libs.jakta)
+    implementation(libs.bundles.kotlin.testing)
+}
+
+tasks.named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-receivers")
     }
 }
 
