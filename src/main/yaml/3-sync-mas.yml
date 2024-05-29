@@ -1,22 +1,14 @@
 incarnation: jakta
 variables:
-  seed: &seed
-    min: 0
-    max: 1
-    step: 1
-    default: 0
-  spacing: &spacing
-    type: ArbitraryVariable
-    parameters: [0.25, [0.25, 0.5]]
-  error: &error
-    type: ArbitraryVariable
-    parameters: [0.1, [0.1, 0.2]]
   sightRadius: &sightRadius
     formula: 2.0
+  numberOfDrones: &numberOfDrones
+    type: ArbitraryVariable
+    parameters: [6, 1, 5, 10, 20]
+  seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
+  scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
-seeds:
-  scenario: *seed
-  simulation: *seed
+seeds: { simulation: *seed, scenario: *scenario_seed}
 
 launcher:
   parameters:
@@ -55,19 +47,22 @@ deployments:
       - molecule: sightRadius
         concentration: *sightRadius
   - type: Rectangle
-    parameters: [ 7.0, -6.0, -6.0, 6.0, 6.0 ]
+    parameters: [ *numberOfDrones, -6.0, -6.0, 6.0, 6.0 ]
     programs:
       - *drone
+
+
 
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "exported-data"
+      fileNameRoot: 3-exported-data
       interval: 1.0
-      exportPath: "data"
+      exportPath: data
     data:
+      - time
       - type: DistanceError
 
 terminate:
   - type: AfterTime
-    parameters: [ 18000 ]
+    parameters: [ 1500 ]

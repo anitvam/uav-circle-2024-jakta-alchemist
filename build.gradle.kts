@@ -112,7 +112,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
         val graphic by basetask("run${capitalizedName}Graphic") {
             args(
                 "--override",
-                "monitors: { type: SwingGUI, parameters: { graphics: effects/${it.nameWithoutExtension}.json } }",
+                "monitors: { type: SwingGUI, parameters: { graphics: effects/simulation.json } }",
                 "--override",
                 "launcher: { parameters: { batch: [], autoStart: false } }",
             )
@@ -126,7 +126,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 """
                     launcher: {
                         parameters: {
-                            batch: [ seed, spacing, error ],
+                            batch: [ seed, numberOfDrones ],
                             showProgress: true,
                             autoStart: true,
                             parallelism: $threadCount,

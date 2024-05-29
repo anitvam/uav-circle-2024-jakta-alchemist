@@ -1,6 +1,20 @@
 variables:
   sightRadius: &sightRadius
     formula: 2.0
+  agentFrequency: &agent-frequency
+    type: LinearVariable
+    parameters: [ 1, 0.5, 5, 0.5 ]
+  lambdaDeliberate: &lambda-deliberate
+    formula: 0.1
+  lambda-act: &lambda-act
+    formula: lambdaDeliberate
+  numberOfDrones: &numberOfDrones
+    type: ArbitraryVariable
+    parameters: [ 2, 1, 5, 10, 20 ]
+  seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
+  scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
+
+seeds: { simulation: *seed, scenario: *scenario_seed }
 
 incarnation: jakta
 network-model:
@@ -12,14 +26,14 @@ _pool: &leader
       type: JaktaTimeDistribution
       parameters:
         sense:
-          type: DiracComb
-          parameters: 0.5
+          type: WeibullTime
+          parameters: [ *agent-frequency, 0.2 ]
         deliberate:
-          type: DiracComb
-          parameters: 1
+          type: ExponentialTime
+          parameters: *lambda-deliberate
         act:
-          type: DiracComb
-          parameters: 1
+          type: ExponentialTime
+          parameters: *lambda-act
     program:
       agent-factory: it.unibo.jakta.examples.swarm.LeaderDrone.leader
       parameters: []
@@ -29,14 +43,14 @@ _program: &drone
       type: JaktaTimeDistribution
       parameters:
         sense:
-          type: DiracComb
-          parameters: 0.5
+          type: WeibullTime
+          parameters: [ *agent-frequency, 0.2 ]
         deliberate:
-          type: DiracComb
-          parameters: 1
+          type: ExponentialTime
+          parameters: *lambda-deliberate
         act:
-          type: DiracComb
-          parameters: 1
+          type: ExponentialTime
+          parameters: *lambda-act
     program:
       agent-factory: it.unibo.jakta.examples.swarm.Drone.drone
       parameters: [ ]
@@ -54,18 +68,20 @@ deployments:
       - molecule: sightRadius
         concentration: *sightRadius
   - type: Rectangle
-    parameters: [ 7.0, -6.0, -6.0, 6.0, 6.0 ]
+    parameters: [ *numberOfDrones, -6.0, -6.0, 6.0, 6.0 ]
     programs:
       - *drone
 
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "exported-data"
-      exportPath: "data"
+      fileNameRoot: 1-exported-data
+      interval: 1.0
+      exportPath: data
     data:
+      - time
       - type: DistanceError
 
 terminate:
   - type: AfterTime
-    parameters: [ 18000 ]
+    parameters: [ 1500 ]
