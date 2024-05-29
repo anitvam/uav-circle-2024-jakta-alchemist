@@ -63,7 +63,7 @@ export:
   - type: CSVExporter
     parameters:
       fileNameRoot: "exported-data"
-      interval: 10.0
+      interval: 1.0
       exportPath: "data"
     data:
       - type: DistanceError
