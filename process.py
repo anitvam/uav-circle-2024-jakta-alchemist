@@ -184,17 +184,17 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = 'data_summary'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['simulation']
+    experiments = ['1-exported-data', '2-exported-data', '3-exported-data']
     floatPrecision = '{: 0.3f}'
     # Number of time samples 
     timeSamples = 100
     # time management
     minTime = 0
-    maxTime = 50
+    maxTime = 1500
     timeColumnName = 'time'
     logarithmicTime = False
     # One or more variables are considered random and "flattened"
-    seedVars = ['seed', 'longseed']
+    seedVars = ['seed']
     # Label mapping
     class Measure:
         def __init__(self, description, unit = None):
@@ -278,6 +278,7 @@ if __name__ == '__main__':
                 import fnmatch
                 allfiles = filter(lambda file: fnmatch.fnmatch(file, experiment + '_*.csv'), os.listdir(directory))
                 allfiles = [directory + '/' + name for name in allfiles]
+
                 allfiles.sort()
                 # From the file name, extract the independent variables
                 dimensions = {}
@@ -413,15 +414,39 @@ if __name__ == '__main__':
                             ax.legend()
                             fig.tight_layout()
                             by_time_output_directory = f'{output_directory}/{basedir}/{comparison_variable}'
+                            print(by_time_output_directory)
                             Path(by_time_output_directory).mkdir(parents=True, exist_ok=True)
                             figname = f'{comparison_variable}_{current_metric}_{current_coordinate}_{beautified_value}{"_err" if withErrors else ""}'
                             for symbol in r".[]\/@:":
                                 figname = figname.replace(symbol, '_')
                             fig.savefig(f'{by_time_output_directory}/{figname}.pdf')
                             plt.close(fig)
+
     for experiment in experiments:
         current_experiment_means = means[experiment]
         current_experiment_errors = stdevs[experiment]
-        generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
+        #generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
         
 # Custom charting
+    def custom_subplot(figure, ax, ds):    
+        # For each value of numberOfDrones
+        numberOfDrones = ds.coords['numberOfDrones'].values
+        #fig, ax = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
+        for idx, x in enumerate(numberOfDrones):
+            # Display a line in the plot
+            dataset = ds.sel(numberOfDrones=x).to_dataframe()
+            ax[idx].plot(ds[timeColumnName], dataset['error'], label=f'numberOfDrones={x}')
+            ax[idx].legend()
+
+    #experiment = "3-exported-data"
+    numberOfDrones = means["3-exported-data"].coords['numberOfDrones'].values
+    agentFrequencies = means["1-exported-data"].coords['agentFrequency'].values
+    fig, ax = plt.subplots(len(agentFrequencies), len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
+    for f in enumerate(agentFrequencies):
+        //from here
+    for experiment in ["3-exported-data", "2-exported-data"]:
+        custom_subplot(fig, ax, means[experiment])
+        
+    fig.tight_layout()
+    Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
+    fig.savefig(f'{output_directory}/{experiment}.pdf')
