@@ -17,6 +17,7 @@ import it.unibo.jakta.agents.bdi.environment.Environment
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.bdi.messages.MessageQueue
 import it.unibo.jakta.agents.bdi.perception.Perception
+import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import org.apache.commons.math3.random.RandomGenerator
@@ -58,14 +59,22 @@ class JaktaEnvironmentForAlchemist<P : Position<P>>(
         get() = Perception.of(
             alchemistEnvironment
                 .getNeighborhood(node)
-                . {
-                    Belief.fromPerceptSource(Struct.of(it.key, ObjectRef.of(it.value)))
-                },
+                .flatMap { node ->
+                    node.reactions
+                        .filterIsInstance<JaktaAgentForAlchemist<P>>()
+                        .map {
+                            Belief.fromPerceptSource(Struct.of(
+                                "neighbour",
+                                Atom.of(it.agent.name),
+                                Atom.of(node.id.toString()),
+                            )) // neighbour("agent", "1").fromPercept
+                        }
+                }
+
         )
 
     // --------------- Messages ---------------
 
-    @Suppress("UNCHECKED_CAST")
     private fun getMessageBroker(): JaktaForAlchemistMessageBroker<P> =
         node.asProperty()
 

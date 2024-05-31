@@ -36,7 +36,7 @@ _move-drone: &move-drone
   type: Event
   time-distribution:
     type: DiracComb
-    parameters: [ 0, 100 ]
+    parameters: [ 0, 10 ]
   actions:
     type: MoveToTarget
     parameters: ["desiredPosition", *speed ]
