@@ -55,6 +55,10 @@ export:
       - time
       - type: DistanceError
 
+launcher:
+  parameters: 
+    batch: [seed, numberOfDrones]
+
 terminate:
   - type: AfterTime
     parameters: [ 1500 ]
