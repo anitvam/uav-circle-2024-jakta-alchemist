@@ -428,15 +428,16 @@ if __name__ == '__main__':
         #generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
         
 # Custom charting
-    def custom_subplot(figure, ax, axRow, ds):    
+    def custom_subplot(figure, ax, axRow, ds, algorithm):    
         # For each value of numberOfDrones
         numberOfDrones = ds.coords['numberOfDrones'].values
         #fig, ax = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
         for idx, x in enumerate(numberOfDrones):
             # Display a line in the plot
             dataset = ds.sel(numberOfDrones=x).to_dataframe()
-            ax[axRow].plot(ds[timeColumnName], dataset['error'], label=f'numberOfDrones={x}')
-            ax[axRow].legend()
+            ax[idx].plot(ds[timeColumnName], dataset['error'], label=algorithm)
+            ax[idx].set_title(f'{x} Number of Drones - 1 Leader')
+            ax[idx].legend()
 
     #experiment = "3-exported-data"
     numberOfDrones = means["3-exported-data"].coords['numberOfDrones'].values
@@ -446,13 +447,15 @@ if __name__ == '__main__':
     print(agentFrequencies)
     print(len(agentFrequencies))
 
-    fig, axes = plt.subplots(len(agentFrequencies), len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
+    
 
     for idf, f in enumerate(agentFrequencies):
-        custom_subplot(fig, axes, idf, means["1-exported-data"].sel(agentFrequency=f))
-        for experiment in ["3-exported-data", "2-exported-data"]:
-            custom_subplot(fig, axes, idf, means[experiment])
-        
-    fig.tight_layout()
-    Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
-    fig.savefig(f'{output_directory}/{experiment}.pdf')
+        fig, axes = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
+        custom_subplot(fig, axes, idf, means["1-exported-data"].sel(agentFrequency=f), f'Agent Phase - Freq. {f}')
+        custom_subplot(fig, axes, idf, means["2-exported-data"], "Agent Step")
+        custom_subplot(fig, axes, idf, means["3-exported-data"], "Mas Step")
+            
+        fig.tight_layout()
+        Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
+        fig.savefig(f'{output_directory}/experiment-agentFrequency={f}.pdf')
+    

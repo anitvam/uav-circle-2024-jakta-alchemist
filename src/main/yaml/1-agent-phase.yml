@@ -10,7 +10,7 @@ variables:
     formula: lambdaDeliberate
   numberOfDrones: &numberOfDrones
     type: ArbitraryVariable
-    parameters: [ 2, 1, 5, 10, 20 ]
+    parameters: [2, 1, 5, 10, 20]
   seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
   scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
