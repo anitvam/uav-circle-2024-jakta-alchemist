@@ -428,24 +428,30 @@ if __name__ == '__main__':
         #generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
         
 # Custom charting
-    def custom_subplot(figure, ax, ds):    
+    def custom_subplot(figure, ax, axRow, ds):    
         # For each value of numberOfDrones
         numberOfDrones = ds.coords['numberOfDrones'].values
         #fig, ax = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
         for idx, x in enumerate(numberOfDrones):
             # Display a line in the plot
             dataset = ds.sel(numberOfDrones=x).to_dataframe()
-            ax[idx].plot(ds[timeColumnName], dataset['error'], label=f'numberOfDrones={x}')
-            ax[idx].legend()
+            ax[axRow].plot(ds[timeColumnName], dataset['error'], label=f'numberOfDrones={x}')
+            ax[axRow].legend()
 
     #experiment = "3-exported-data"
     numberOfDrones = means["3-exported-data"].coords['numberOfDrones'].values
     agentFrequencies = means["1-exported-data"].coords['agentFrequency'].values
-    fig, ax = plt.subplots(len(agentFrequencies), len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
-    for f in enumerate(agentFrequencies):
-        //from here
-    for experiment in ["3-exported-data", "2-exported-data"]:
-        custom_subplot(fig, ax, means[experiment])
+    
+    # Create plots grid
+    print(agentFrequencies)
+    print(len(agentFrequencies))
+
+    fig, axes = plt.subplots(len(agentFrequencies), len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
+
+    for idf, f in enumerate(agentFrequencies):
+        custom_subplot(fig, axes, idf, means["1-exported-data"].sel(agentFrequency=f))
+        for experiment in ["3-exported-data", "2-exported-data"]:
+            custom_subplot(fig, axes, idf, means[experiment])
         
     fig.tight_layout()
     Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
