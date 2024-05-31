@@ -1,16 +1,27 @@
 variables:
+  environmentSize: &environment-size
+    formula: 10
   sightRadius: &sightRadius
-    formula: 2.0
+    formula: environmentSize / 2.0
+    language: kotlin
+  followRadius: &followRadius
+    formula: sightRadius / 2
+    language: kotlin
   agentFrequency: &agent-frequency
     type: LinearVariable
+    parameters: [ 5, 0.5, 5, 0.5 ]
+  speed: &speed
+    type: LinearVariable
     parameters: [ 1, 0.5, 5, 0.5 ]
+  agentVariance: &agent-variance
+    formula: agentFrequency * 0.1
   lambdaDeliberate: &lambda-deliberate
-    formula: 0.1
+    formula: 20
   lambda-act: &lambda-act
     formula: lambdaDeliberate
   numberOfDrones: &numberOfDrones
     type: ArbitraryVariable
-    parameters: [2, 1, 5, 10, 20]
+    parameters: [20, 1, 5, 10, 20]
   seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
   scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
@@ -21,13 +32,24 @@ network-model:
   type: ConnectWithinDistance
   parameters: [ *sightRadius ]
 
+_move-drone: &move-drone
+  type: Event
+  time-distribution: 10
+  actions:
+    type: MoveToTarget
+    parameters: ["desiredPosition", *speed ]
+
 _pool: &leader
   - time-distribution:
       type: JaktaTimeDistribution
       parameters:
         sense:
-          type: WeibullTime
-          parameters: [ *agent-frequency, 0.2 ]
+          type: DiracComb
+          parameters:
+            - *agent-variance
+            - *agent-frequency
+#          type: WeibullTime
+#          parameters: [ *agent-frequency, *agent-variance ]
         deliberate:
           type: ExponentialTime
           parameters: *lambda-deliberate
@@ -43,8 +65,12 @@ _program: &drone
       type: JaktaTimeDistribution
       parameters:
         sense:
-          type: WeibullTime
-          parameters: [ *agent-frequency, 0.2 ]
+          type: DiracComb
+          parameters:
+            - *agent-variance
+            - *agent-frequency
+#          type: WeibullTime
+#          parameters: [ *agent-frequency, *agent-variance ]
         deliberate:
           type: ExponentialTime
           parameters: *lambda-deliberate
@@ -57,20 +83,24 @@ _program: &drone
 
 deployments:
   - type: Point
-    parameters: [ -5.0, -3.0 ]
+    parameters: [ 0, 0 ]
     programs:
       - *leader
+      - *move-drone
     contents:
       - molecule: leader
         concentration: true
       - molecule: radius
-        concentration: 1.0
+        concentration: *sightRadius
+      - molecule: followRadius
+        concentration: *followRadius
       - molecule: sightRadius
         concentration: *sightRadius
-  - type: Rectangle
-    parameters: [ *numberOfDrones, -6.0, -6.0, 6.0, 6.0 ]
+  - type: Circle
+    parameters: [ *numberOfDrones, 0, 0, *environment-size ]
     programs:
       - *drone
+      - *move-drone
 
 export:
   - type: CSVExporter
