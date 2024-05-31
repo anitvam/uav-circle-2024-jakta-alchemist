@@ -9,7 +9,7 @@ variables:
     language: kotlin
   agentFrequency: &agent-frequency
     type: LinearVariable
-    parameters: [ 5, 0.5, 5, 0.5 ]
+    parameters: [ 0.1, 0.5, 5, 0.5 ]
   speed: &speed
     type: LinearVariable
     parameters: [ 1, 0.5, 5, 0.5 ]
