@@ -439,7 +439,7 @@ if __name__ == '__main__':
             sigmaMinus = dataset["error"] - errorsDataset["error"]
             sigmaPlus = dataset["error"] + errorsDataset["error"]
             ax[idx].plot(ds[timeColumnName], dataset['error'], label=algorithm)
-            ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, alpha=0.2)
+            #ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, alpha=0.2)
             ax[idx].set_title(f'{x} Number of Drones - 1 Leader')
             ax[idx].legend()
 
