@@ -9,19 +9,18 @@ variables:
     language: kotlin
   agentFrequency: &agent-frequency
     type: LinearVariable
-    parameters: [ 5, 0.5, 5, 0.5 ]
+    parameters: [ 2, 1, 5, 1 ]
   speed: &speed
     type: LinearVariable
     parameters: [ 1, 0.5, 5, 0.5 ]
+  variance:
+    type: LinearVariable
+    parameters: [ 0.1, 0.0, 1, 0.1 ]
   agentVariance: &agent-variance
-    formula: agentFrequency * 0.1
-  lambdaDeliberate: &lambda-deliberate
-    formula: 20
-  lambda-act: &lambda-act
-    formula: lambdaDeliberate
+    formula: agentFrequency * variance
   numberOfDrones: &numberOfDrones
     type: ArbitraryVariable
-    parameters: [20, 1, 5, 10, 20]
+    parameters: [16, 6, 16]
   seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
   scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
@@ -42,19 +41,17 @@ _move-drone: &move-drone
 _pool: &leader
   - time-distribution:
       type: DiracComb
-      parameters:
-        - *agent-variance
-        - *agent-frequency
+      parameters: [0, 1]
     program:
       agent-factory: it.unibo.jakta.examples.swarm.LeaderDrone.leader
       parameters: []
 
 _program: &drone
   - time-distribution:
-      type: DiracComb
+      type: WeibullTime
       parameters:
-        - *agent-variance
-        - *agent-frequency
+        deviation: *agent-variance
+        mean: *agent-frequency
     program:
       agent-factory: it.unibo.jakta.examples.swarm.Drone.drone
       parameters: [ ]
@@ -92,7 +89,7 @@ export:
 
 launcher:
   parameters:
-    batch: [seed, numberOfDrones]
+    batch: [seed, agentFrequency, variance]
 
 terminate:
   - type: AfterTime

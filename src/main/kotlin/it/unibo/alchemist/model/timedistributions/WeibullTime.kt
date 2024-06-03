@@ -14,8 +14,8 @@ import org.apache.commons.math3.special.Gamma
 import org.apache.commons.math3.util.FastMath
 
 open class WeibullTime<T> private constructor(
-    private val rand: RandomGenerator,
-    private val dist: WeibullDistribution,
+    private val randomGenerator: RandomGenerator,
+    private val backingDistribution: WeibullDistribution,
     private val offset: Double,
     start: Time,
 ) : AbstractDistribution<T?>(start) {
@@ -49,14 +49,14 @@ open class WeibullTime<T> private constructor(
     }
 
     protected fun genSample(): Double {
-        return dist.inverseCumulativeProbability(rand.nextDouble()) + this.offset
+        return backingDistribution.inverseCumulativeProbability(randomGenerator.nextDouble()) + this.offset
     }
 
     val mean: Double
-        get() = dist.numericalMean + this.offset
+        get() = backingDistribution.numericalMean + this.offset
 
     val deviation: Double
-        get() = FastMath.sqrt(dist.numericalVariance)
+        get() = FastMath.sqrt(backingDistribution.numericalVariance)
 
     override fun getRate(): Double {
         return this.mean
@@ -67,8 +67,8 @@ open class WeibullTime<T> private constructor(
         currentTime: Time,
     ): WeibullTime<T?> {
         return WeibullTime(
-            this.rand,
-            this.dist,
+            this.randomGenerator,
+            this.backingDistribution,
             this.offset, currentTime
         )
     }

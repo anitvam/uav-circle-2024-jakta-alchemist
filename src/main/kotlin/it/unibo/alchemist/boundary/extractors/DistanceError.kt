@@ -33,7 +33,7 @@ class DistanceError : AbstractDoubleExporter() {
                 SwarmPosition.fromPosition(leaderPosition),
             )
             val diff = idealPosition - SwarmPosition.fromPosition(environment.getPosition(follower))
-            hypot(diff.x, diff.y)
+            hypot(diff.x, diff.y).let { it * it }
         }.sum()
         return mapOf(columnNames.first() to error)
     }

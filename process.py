@@ -186,7 +186,7 @@ if __name__ == '__main__':
     # Experiment prefixes: one per experiment (root of the file name)
     experiments = ['1-exported-data', '2-exported-data', '3-exported-data']
     floatPrecision = '{: 0.3f}'
-    # Number of time samples 
+    # Number of time samples
     timeSamples = 100
     # time management
     minTime = 0
@@ -218,7 +218,7 @@ if __name__ == '__main__':
             return result
         def __str__(self):
             return f'{self.description()} {self.unit()}'
-    
+
     centrality_label = 'H_a(x)'
     def expected(x):
         return r'\mathbf{E}[' + x + ']'
@@ -250,7 +250,7 @@ if __name__ == '__main__':
         return labels.get(variable_name, derivativeOrMeasure(variable_name)).description()
     def unit_for(variable_name):
         return str(labels.get(variable_name, derivativeOrMeasure(variable_name)))
-    
+
     # Setup libraries
     np.set_printoptions(formatter={'float': floatPrecision.format})
     # Read the last time the data was processed, reprocess only if new data exists, otherwise just load
@@ -349,7 +349,7 @@ if __name__ == '__main__':
     import matplotlib.cm as cmx
     matplotlib.rcParams.update({'axes.titlesize': 12})
     matplotlib.rcParams.update({'axes.labelsize': 10})
-    
+
     def make_line_chart(
         xdata,
         ydata,
@@ -426,9 +426,9 @@ if __name__ == '__main__':
         current_experiment_means = means[experiment]
         current_experiment_errors = stdevs[experiment]
         #generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
-        
+
 # Custom charting
-    def custom_subplot(ax, ds, errors, algorithm):    
+    def custom_subplot(ax, ds, errors, algorithm):
         # For each value of numberOfDrones
         numberOfDrones = ds.coords['numberOfDrones'].values
         #fig, ax = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
@@ -439,22 +439,22 @@ if __name__ == '__main__':
             sigmaMinus = dataset["error"] - errorsDataset["error"]
             sigmaPlus = dataset["error"] + errorsDataset["error"]
             ax[idx].plot(ds[timeColumnName], dataset['error'], label=algorithm)
-            #ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, alpha=0.2)
+            ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, alpha=0.2)
             ax[idx].set_title(f'{x} Number of Drones - 1 Leader')
             ax[idx].legend()
 
     #experiment = "3-exported-data"
     numberOfDrones = means["3-exported-data"].coords['numberOfDrones'].values
     agentFrequencies = means["1-exported-data"].coords['agentFrequency'].values
-    
+
     # Create plots
     for idf, f in enumerate(agentFrequencies):
         fig, axes = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
         custom_subplot(axes, means["1-exported-data"].sel(agentFrequency=f), stdevs["1-exported-data"].sel(agentFrequency=f), f'Agent Phase - Freq. {f}')
         custom_subplot(axes, means["2-exported-data"], stdevs["2-exported-data"], "Agent Step")
         custom_subplot(axes, means["3-exported-data"], stdevs["3-exported-data"], "Mas Step")
-            
+
         fig.tight_layout()
         Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
         fig.savefig(f'{output_directory}/experiment-agentFrequency={f}.pdf')
-    
+

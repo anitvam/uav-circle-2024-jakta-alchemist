@@ -9,19 +9,24 @@ variables:
     language: kotlin
   agentFrequency: &agent-frequency
     type: LinearVariable
-    parameters: [ 0.1, 0.5, 5, 0.5 ]
+    parameters: [ 5, 1, 5, 1 ]
   speed: &speed
     type: LinearVariable
     parameters: [ 1, 0.5, 5, 0.5 ]
+  variance:
+    type: LinearVariable
+    parameters: [ 0.1, 0.0, 1, 0.1 ]
   agentVariance: &agent-variance
-    formula: agentFrequency * 0.1
+    formula: agentFrequency * variance
+    language: kotlin
   lambdaDeliberate: &lambda-deliberate
-    formula: 20
+    formula: agentFrequency
+    language: kotlin
   lambda-act: &lambda-act
     formula: lambdaDeliberate
   numberOfDrones: &numberOfDrones
     type: ArbitraryVariable
-    parameters: [20, 1, 5, 10, 20]
+    parameters: [16, 6, 16]
   seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
   scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
@@ -41,21 +46,8 @@ _move-drone: &move-drone
 
 _pool: &leader
   - time-distribution:
-      type: JaktaTimeDistribution
-      parameters:
-        sense:
-          type: DiracComb
-          parameters:
-            - *agent-variance
-            - *agent-frequency
-#          type: WeibullTime
-#          parameters: [ *agent-frequency, *agent-variance ]
-        deliberate:
-          type: ExponentialTime
-          parameters: *lambda-deliberate
-        act:
-          type: ExponentialTime
-          parameters: *lambda-act
+      type: DiracComb
+      parameters: [0, 1]
     program:
       agent-factory: it.unibo.jakta.examples.swarm.LeaderDrone.leader
       parameters: []
@@ -65,12 +57,10 @@ _program: &drone
       type: JaktaTimeDistribution
       parameters:
         sense:
-          type: DiracComb
+          type: WeibullTime
           parameters:
-            - *agent-variance
-            - *agent-frequency
-#          type: WeibullTime
-#          parameters: [ *agent-frequency, *agent-variance ]
+            deviation: *agent-variance
+            mean: *agent-frequency
         deliberate:
           type: ExponentialTime
           parameters: *lambda-deliberate
@@ -113,8 +103,8 @@ export:
       - type: DistanceError
 
 launcher:
-  parameters: 
-    batch: [seed, numberOfDrones, agentFrequency]
+  parameters:
+    batch: [seed, agentFrequency, variance]
 
 terminate:
   - type: AfterTime
