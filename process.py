@@ -428,33 +428,125 @@ if __name__ == '__main__':
         #generate_all_charts(current_experiment_means, current_experiment_errors, basedir = f'{experiment}/all')
 
 # Custom charting
-    def custom_subplot(ax, ds, errors, algorithm):
-        # For each value of numberOfDrones
-        numberOfDrones = ds.coords['numberOfDrones'].values
-        #fig, ax = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
-        for idx, x in enumerate(numberOfDrones):
-            # Display a line in the plot
-            dataset = ds.sel(numberOfDrones=x).to_dataframe()
-            errorsDataset = errors.sel(numberOfDrones=x).to_dataframe()
+    def custom_subplot(ax, ds, errors, evaluatingColumn, selected_variance, algorithm, color_value):
+        evaluatingValues = ds.coords[evaluatingColumn].values
+        viridis = plt.colormaps['viridis']
+        for idx, x in enumerate(selected_variance):
+            dataset = ds.sel(variance=x).to_dataframe()
+            errorsDataset = errors.sel(variance=x).to_dataframe()
             sigmaMinus = dataset["error"] - errorsDataset["error"]
             sigmaPlus = dataset["error"] + errorsDataset["error"]
-            ax[idx].plot(ds[timeColumnName], dataset['error'], label=algorithm)
-            ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, alpha=0.2)
-            ax[idx].set_title(f'{x} Number of Drones - 1 Leader')
+            ax[idx].plot(ds[timeColumnName], dataset['error'], label=algorithm, color=viridis(color_value))
+            ax[idx].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, color=viridis(color_value), alpha=0.2)
+            ax[idx].set_xlabel('Time ($ s $)')
+            ax[idx].set_ylabel('Squared Distance Error ($ m^2 $)')
+            ax[idx].set_title(f'Relative Drift {x}$ \\tau $')
             ax[idx].legend()
+            
+    def baseline_subplot(ax, ds, errors, algorithm, color):
+        for i in range(len(ax)):
+            ds_df = ds.to_dataframe()
+            err_df = errors.to_dataframe()
+            sigmaMinus = ds_df["error"] - err_df["error"]
+            sigmaPlus = ds_df["error"] + err_df["error"]
+            ax[i].plot(ds[timeColumnName], ds_df['error'], label=algorithm, color=color)
+            ax[i].fill_between(ds[timeColumnName], sigmaMinus, sigmaPlus, color=color, alpha=0.2)
+            ax[i].legend()
+            
+    from matplotlib.gridspec import SubplotSpec
+    def create_subtitle(fig: plt.Figure, grid: SubplotSpec, title: str):
+        "Sign sets of subplots with title"
+        row = fig.add_subplot(grid)
+        # the '\n' is important
+        row.set_title(f'{title}\n', fontweight='semibold')
+        # hide subplot
+        row.set_frame_on(False)
+        row.axis('off')
+                    
+    def error_over_time_charts(means, errors):
+        evaluatingColumn = "variance"
+        
+        
+        selected_frequencies = [1.0, 2.0]
+        selected_variance = [ 0.0, 0.5, 0.7 ]
+        fig, axes = plt.subplots(len(selected_frequencies), len(selected_variance), figsize=(18, 8), sharey=False, layout="constrained")
+        grid = plt.GridSpec(len(selected_frequencies), len(selected_variance))
+  
+        for idf, f in enumerate(selected_frequencies):
+            fig.suptitle('Errors over time', fontweight='bold')
+            create_subtitle(fig, grid[idf, ::], f'Agent Frequency = {f}')            
 
-    #experiment = "3-exported-data"
-    numberOfDrones = means["3-exported-data"].coords['numberOfDrones'].values
-    agentFrequencies = means["1-exported-data"].coords['agentFrequency'].values
+            custom_subplot(axes[idf], means["1-exported-data"].sel(agentFrequency=f), errors["1-exported-data"].sel(agentFrequency=f), evaluatingColumn, selected_variance, 'ACLP', 0.8)
+            custom_subplot(axes[idf], means["2-exported-data"].sel(agentFrequency=f), errors["2-exported-data"].sel(agentFrequency=f), evaluatingColumn, selected_variance, "ACLI", 0.2)
+            baseline_subplot(axes[idf], means["3-exported-data"], errors["3-exported-data"], "AMA@1Hz", 'k')
 
-    # Create plots
-    for idf, f in enumerate(agentFrequencies):
-        fig, axes = plt.subplots(1, len(numberOfDrones), figsize=(18, 4), sharey=False, layout="constrained")
-        custom_subplot(axes, means["1-exported-data"].sel(agentFrequency=f), stdevs["1-exported-data"].sel(agentFrequency=f), f'Agent Phase - Freq. {f}')
-        custom_subplot(axes, means["2-exported-data"], stdevs["2-exported-data"], "Agent Step")
-        custom_subplot(axes, means["3-exported-data"], stdevs["3-exported-data"], "Mas Step")
+            fig.tight_layout()
+            Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
+            fig.savefig(f'{output_directory}/error_over_time.pdf')
+            
+    def error_over_time_charts_flattened(means, errors):
+        evaluatingColumn = "variance"
+        selected_frequencies = [1.0, 2.0]
+        selected_variance = [ 0.0, 0.5, 0.7 ]
+        fig, axes = plt.subplots(1, len(selected_variance), figsize=(18, 8), sharey=False, layout="constrained")
+        #grid = plt.GridSpec(len(selected_frequencies), len(selected_variance))
+  
+        
+        fig.suptitle('Errors over time', fontweight='bold')
+        #create_subtitle(fig, grid[idf, ::], f'Agent Frequency = {f}')            
+
+        custom_subplot(axes, means["1-exported-data"].sel(agentFrequency=1.0), errors["1-exported-data"].sel(agentFrequency=1.0), evaluatingColumn, selected_variance, 'ACLP@1Hz', 0.2)
+        custom_subplot(axes, means["1-exported-data"].sel(agentFrequency=2.0), errors["1-exported-data"].sel(agentFrequency=2.0), evaluatingColumn, selected_variance, 'ACLP@2Hz', 0.4)
+        custom_subplot(axes, means["2-exported-data"].sel(agentFrequency=1.0), errors["2-exported-data"].sel(agentFrequency=1.0), evaluatingColumn, selected_variance, "ACLI@1Hz", 0.6)
+        custom_subplot(axes, means["2-exported-data"].sel(agentFrequency=2.0), errors["2-exported-data"].sel(agentFrequency=2.0), evaluatingColumn, selected_variance, "ACLI@2Hz", 0.8)
+        baseline_subplot(axes, means["3-exported-data"], errors["3-exported-data"], "AMA@1Hz", 'k')
 
         fig.tight_layout()
         Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
-        fig.savefig(f'{output_directory}/experiment-agentFrequency={f}.pdf')
+        fig.savefig(f'{output_directory}/error_over_time.pdf')
+   
+    def variance_subplot(data, err, ax, values, algorithm, color):
+        viridis = plt.colormaps['viridis']
+        for idx, x in enumerate(values):
+            dataset = data.sel(agentFrequency=x).to_dataframe()
+            errorsDataset = err.sel(agentFrequency=x).to_dataframe()
+            sigmaMinus = dataset["error"] - errorsDataset["error"]
+            sigmaPlus = dataset["error"] + errorsDataset["error"]
+            ax[idx].plot(data["variance"], dataset['error'], label=algorithm, color=viridis(color))
+            ax[idx].fill_between(data['variance'], sigmaMinus, sigmaPlus, color=viridis(color), alpha=0.2)
+            ax[idx].set_xlabel('Relative Drift ($ \\tau $)')
+            ax[idx].set_ylabel('Squared Distance Error ($ m^2 $)')
+            ax[idx].set_title(f'Agent Frequency {str(x.values)}')
+            ax[idx].legend()
+            
+    def variance_baseline_subplot(x, err, ax, values, algorithm, color):
+        for i in range(len(ax)):
+            ds_df = x.to_dataframe()
+            err_df = err.to_dataframe()
+            sigmaMinus = ds_df["error"] - err_df["error"]
+            sigmaPlus = ds_df["error"] + err_df["error"]
+            ax[i].axhline(ds_df['error'].item(), label=algorithm, color=color)
+            ax[i].fill_between(values, sigmaMinus, sigmaPlus, color=color, alpha=0.2)
+            ax[i].legend()
 
+    def error_over_variance(means, stdevs):
+        experiments = ["1-exported-data", "2-exported-data", "3-exported-data"]
+        colors = ["0.8", "0.2", "k"]
+        selected_frequencies = means["1-exported-data"]['agentFrequency']
+        selected_variance = means["1-exported-data"]['variance']
+        fig, axes = plt.subplots(len(selected_variance), len(selected_frequencies), figsize=(20, 30), sharey=False, layout="constrained")
+        grid = plt.GridSpec(len(selected_variance), len(selected_frequencies))
+        for idx, f in enumerate(selected_variance):
+            create_subtitle(fig, grid[idx, ::], f' Relative Drift = {str(f.values)}$ \\tau $')
+            variance_subplot(means['1-exported-data'].mean(dim='time'), stdevs['1-exported-data'].mean(dim='time'), axes[idx], selected_frequencies, 'ACLP', 0.8)
+            variance_subplot(means["2-exported-data"].mean(dim='time'), stdevs["2-exported-data"].mean(dim="time"), axes[idx], selected_frequencies, 'ACLI', 0.2)
+            variance_baseline_subplot(means["3-exported-data"].mean(dim='time'), stdevs["3-exported-data"].mean(dim='time'), axes[idx], selected_variance, "AMA@1Hz", 'k')
+        
+        fig.tight_layout()
+        Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
+        fig.savefig(f'{output_directory}/error_over_variances.pdf')
+
+    # Create plots
+    error_over_time_charts(means, stdevs)
+    error_over_time_charts_flattened(means, stdevs)
+    error_over_variance(means, stdevs)
