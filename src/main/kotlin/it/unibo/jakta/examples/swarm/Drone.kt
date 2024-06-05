@@ -34,10 +34,10 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.drone() =
                         destinationAngle,
                         center,
                     )
+                    val movement = destinationPosition - myPosition
+                    addData("velocity", doubleArrayOf(movement.x, movement.y))
                     node.setConcentration(destination, destinationPosition)
                     // Compute the movement to perform
-//                    val movement = destinationPosition - myPosition
-//                    addData("velocity", doubleArrayOf(movement.x, movement.y))
 //                    val distanceToMove = hypot(movement.x, movement.y)
 //                    val maxPossibleMovementRadius = 0.15
 //                    if (maxPossibleMovementRadius >= distanceToMove) {
