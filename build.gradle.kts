@@ -45,6 +45,7 @@ dependencies {
     }
     implementation(libs.jakta)
     implementation(libs.bundles.kotlin.testing)
+    implementation("org.danilopianini:javalib-java7:0.6.1")
 }
 
 tasks.named("compileKotlin", org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask::class.java) {
