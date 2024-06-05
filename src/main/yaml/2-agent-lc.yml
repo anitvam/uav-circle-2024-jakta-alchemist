@@ -9,18 +9,18 @@ variables:
     language: kotlin
   agentFrequency: &agent-frequency
     type: LinearVariable
-    parameters: [ 2, 1, 5, 1 ]
+    parameters: [ 1, 1, 5, 1 ]
   speed: &speed
     type: LinearVariable
     parameters: [ 1, 0.5, 5, 0.5 ]
   variance:
     type: LinearVariable
-    parameters: [ 0.1, 0.0, 1, 0.1 ]
+    parameters: [ 0.6, 0.0, 1, 0.1 ]
   agentVariance: &agent-variance
     formula: agentFrequency * variance
   numberOfDrones: &numberOfDrones
     type: ArbitraryVariable
-    parameters: [16, 6, 16]
+    parameters: [6, 6, 16]
   seed: &seed { default: 0, min: 0, max: 99, step: 1 } # 100 samples
   scenario_seed: &scenario_seed { formula: (seed + 31) * seed } # Variable-dependent
 
@@ -93,7 +93,7 @@ launcher:
 
 terminate:
   - type: AfterTime
-    parameters: [ 1500 ]
+    parameters: [ 1000 ]
 
 
 
