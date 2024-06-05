@@ -1,5 +1,24 @@
 [
   {
-    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawJaktaNodes"
+    "type": "class it.unibo.alchemist.boundary.gui.effects.DrawDirectedNode",
+    "trackEnabled": true,
+    "snapshotSize": {
+      "max": 1000,
+      "min": 10,
+      "val": 1000
+    },
+    "timespan": {
+      "max": 100,
+      "min": 1,
+      "val": 20
+    },
+    "nodeSize": {
+      "max": 20,
+      "min": 1,
+      "val": 20
+    },
+    "colorMolecule": "id",
+    "velocityMolecule": "velocity",
+    "maxValue": "7"
   }
 ]
