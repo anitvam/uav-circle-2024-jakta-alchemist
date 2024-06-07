@@ -3,5 +3,6 @@
    "extends": [
       "github>DanySK/renovate-config"
    ],
+   "assignees": ["anitvam"],
    "includeForks": true
 }
