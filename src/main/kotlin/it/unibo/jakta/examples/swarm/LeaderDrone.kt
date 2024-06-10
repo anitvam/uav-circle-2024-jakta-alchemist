@@ -11,6 +11,7 @@ import it.unibo.jakta.agents.bdi.messages.Achieve
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.dsl.device
 import it.unibo.jakta.examples.swarm.CircleMovement.positionInCircumference
+import it.unibo.jakta.examples.swarm.DronesLogic.leaderLogic
 import it.unibo.tuprolog.core.Integer
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
@@ -52,15 +53,6 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(): Agent =
         }
         agent("leader") {
             addData("id", node.id)
-            goals {
-                achieve("move")
-            }
-            plans {
-                +achieve("move") then {
-                    execute("circleMovementStep")
-                    execute("notifyAgent")
-                    achieve("move")
-                }
-            }
+            leaderLogic()
         }
     }

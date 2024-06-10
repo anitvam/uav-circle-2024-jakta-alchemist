@@ -6,6 +6,7 @@ import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
 import it.unibo.alchemist.jakta.util.fix
 import it.unibo.alchemist.model.Position
 import it.unibo.jakta.agents.dsl.device
+import it.unibo.jakta.examples.swarm.DronesLogic.followerLogic
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 
@@ -36,10 +37,6 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
         agent("drone") {
             addData("id", node.id)
             addData("agent", "drone@$node.id")
-            plans {
-                +achieve("joinCircle"(C, R, N)) then {
-                    execute("follow"(C, R, N))
-                }
-            }
+            followerLogic()
         }
     }
