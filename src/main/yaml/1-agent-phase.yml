@@ -68,7 +68,7 @@ _program: &drone
           type: ExponentialTime
           parameters: *lambda-act
     program:
-      agent-factory: it.unibo.jakta.examples.swarm.Drone.drone
+      agent-factory: it.unibo.jakta.examples.swarm.Drone.follower
       parameters: [ ]
 
 deployments:

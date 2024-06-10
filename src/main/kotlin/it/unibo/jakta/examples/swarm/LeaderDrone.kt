@@ -11,6 +11,7 @@ import it.unibo.jakta.agents.bdi.messages.Achieve
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.dsl.device
 import it.unibo.jakta.examples.swarm.CircleMovement.positionInCircumference
+import it.unibo.tuprolog.core.Integer
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
@@ -47,21 +48,14 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(): Agent =
                     )
                     broadcastMessage(Message(sender, Achieve, payload))
                 }
-                action("storeId", 1) {
-                    val id = argument<ObjectRef>(0).fix<Int>()
-                    addData("id", id)
-                }
             }
         }
         agent("leader") {
+            addData("id", node.id)
             goals {
-                achieve("init")
                 achieve("move")
             }
             plans {
-                +achieve("init") then {
-                    execute("storeId"(node.id))
-                }
                 +achieve("move") then {
                     execute("circleMovementStep")
                     execute("notifyAgent")
@@ -70,5 +64,3 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(): Agent =
             }
         }
     }
-
-
