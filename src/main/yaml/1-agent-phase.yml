@@ -50,7 +50,7 @@ _pool: &leader
       parameters: [0, 1]
     program:
       agent-factory: it.unibo.jakta.examples.swarm.LeaderDrone.leader
-      parameters: []
+      parameters: [*sightRadius, *sightRadius, *followRadius]
 
 _program: &drone
   - time-distribution:
@@ -69,7 +69,7 @@ _program: &drone
           parameters: *lambda-act
     program:
       agent-factory: it.unibo.jakta.examples.swarm.Drone.follower
-      parameters: [ ]
+      parameters: []
 
 deployments:
   - type: Point
@@ -80,12 +80,6 @@ deployments:
     contents:
       - molecule: leader
         concentration: true
-      - molecule: radius
-        concentration: *sightRadius
-      - molecule: followRadius
-        concentration: *followRadius
-      - molecule: sightRadius
-        concentration: *sightRadius
   - type: Circle
     parameters: [ *numberOfDrones, 0, 0, *environment-size ]
     programs:
@@ -108,4 +102,4 @@ launcher:
 
 terminate:
   - type: AfterTime
-    parameters: [ 1000 ]
+    parameters: [ 1500 ]

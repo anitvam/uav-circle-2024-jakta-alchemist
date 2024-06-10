@@ -19,16 +19,16 @@ import kotlin.math.PI
 
 val destination = SimpleMolecule("desiredPosition")
 
-fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(): Agent =
+fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sightRadius: Double, followRadius: Double): Agent =
     device {
         environment {
             actions {
                 action("circleMovementStep", 0) {
                     val initialPosition = SwarmPosition.fromPosition(alchemistEnvironment.getPosition(node))
-                    val radius = data["radius"] as? Number ?: error("Missing radius as Node molecule. $data")
+                    val r = data["radius"] as? Number ?: error("Missing radius as Node molecule. $data")
                     val center = SwarmPosition(0.0, 0.0)//data["centerPosition"]
                     val nextPosition = positionInCircumference(
-                        radius.toDouble(),
+                        r.toDouble(),
                         2 * PI * alchemistEnvironment.simulation.time.toDouble() / 600,
                         SwarmPosition.fromPosition(center),
                     )
@@ -52,7 +52,10 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(): Agent =
             }
         }
         agent("leader") {
-            addData("id", node.id)
+            addObservableProperty("id", node.id)
+            addObservableProperty("sightRadius", sightRadius)
+            addObservableProperty("radius", radius)
+            addObservableProperty("followRadius", followRadius)
             leaderLogic()
         }
     }

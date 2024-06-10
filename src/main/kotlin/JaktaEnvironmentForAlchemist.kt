@@ -107,6 +107,8 @@ class JaktaEnvironmentForAlchemist<P : Position<P>>(
         return this
     }
 
+    fun addObservableProperty(key: String, value: Any) = addData(key, value)
+
     override fun removeData(key: String): Environment {
         node.contents.keys.firstOrNull { it.name.equals(key) }?.let { node.removeConcentration(it) }
         return this
