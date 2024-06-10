@@ -1,3 +1,15 @@
+## [1.0.1](https://github.com/anitvam/dsrt-2024-jakta-alchemist/compare/1.0.0...1.0.1) (2024-06-10)
+
+
+### Bug Fixes
+
+* remove unused dependencies ([131e433](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/131e43377470abfb8f8ad2a6bc4aa7f4c8aecbec))
+
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.0 [skip ci] ([7589801](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/7589801ab76a6d08f3f06b26a8575b4b8c52ff8f))
+
 ## 1.0.0 (2024-06-10)
 
 
