@@ -1,3 +1,50 @@
+## 1.0.0 (2024-06-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* help me @danysk
+
+### fixup
+
+* help me [@danysk](https://github.com/danysk) ([9a9e992](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/9a9e9928a613f5fa760f0e2a98523edb6fa19117))
+
+
+### Features
+
+* add DrawDirectedNode as default effect for graphical simulations ([e653c63](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/e653c63967598bf176692feffcf1bb579c06d6f0))
+* add molecule for using DrawDirectedNode Alchemist effect ([b967d9a](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/b967d9a7d48c8c6c705a7ce7b819bafb2f594cd0))
+* run simulation ([29f41ee](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/29f41eed4035c43f9be27e7843976e8f450b7ec1))
+* temporary overload for DrawDirectedNode ([8289afd](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/8289afd0687cd18386d8d6dcdd819186be4fe90f))
+* update alchemist version and remove overrides. Update process.py to generate better charts ([6855f16](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/6855f163f5e72c85ffece8b13736678ff08a75d0))
+
+
+### Dependency updates
+
+* **deps:** update alchemist to v34.0.7 ([33d6dab](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/33d6dab1aa4ea1adf4fb843160d6f69c3a9ac259))
+* **deps:** update dependency gradle to v8.8 ([a2747f8](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/a2747f8b1ac9f8a7018a91fb9b2bbdeb723b166d))
+* **deps:** update dependency it.unibo.jakta:alchemist-jakta-incarnation to v0.10.7 ([6c4b3f4](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/6c4b3f4e43c343d6352973153ec2cd138e66c7c4))
+* **deps:** update kotest to v5.9.1 ([f455e62](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/f455e62f6a34e29694c5c00682231d68f093c0ca))
+* **deps:** update node.js to 20.14 ([0c58b58](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/0c58b585685907e7732e4f17ca0762e8389fda65))
+* **deps:** update plugin gitsemver to v3.1.7 ([e7207d8](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/e7207d8f7abba91c841ad1a3a9a60f964c1b2663))
+* **deps:** update plugin kotlin-qa to v0.62.3 ([5153e79](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/5153e797fab508329e911a40773fd7a9fb968b7f))
+
+
+### Bug Fixes
+
+* compilation error fixed ([56747b3](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/56747b37a66f049cceb5a27e99b8f417b24b4439))
+* fixed error in Export instantiation ([09ef434](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/09ef43473142bbed8a99b91f72fa5e389e97ad5c))
+
+
+### Style improvements
+
+* tune simulation configuration for a nice graphical representation ([9d40134](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/9d401348a48f43913fb529318690e05febe28c6e))
+
+
+### Refactoring
+
+* renaming JaktaEnvironmentForAlchemist file overload ([5e24c5c](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/5e24c5c733a19d12801d7001f74487b5855fad25))
+
 ## [1.2.1](https://github.com/DanySK/alchemist-experiments-bootstrap/compare/1.2.0...1.2.1) (2024-02-09)
 
 
