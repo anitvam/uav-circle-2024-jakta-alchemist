@@ -471,7 +471,7 @@ if __name__ == '__main__':
         evaluatingColumn = "variance"
         selected_frequencies = [1.0, 2.0]
         selected_variance = [ 0.0, 0.5, 0.7 ]
-        fig, axes = plt.subplots(1, len(selected_variance), figsize=(18, 5), sharey=False, layout="constrained")
+        fig, axes = plt.subplots(1, len(selected_variance), figsize=(18, 3), sharey=False, layout="constrained")
         #grid = plt.GridSpec(len(selected_frequencies), len(selected_variance))
         axes[0].set_ylabel('Squared Distance Error ($ m^2 $)')
         
@@ -518,7 +518,7 @@ if __name__ == '__main__':
         # selected_frequencies = means["1-exported-data"]['agentFrequency']
         selected_frequencies = [1.0, 2.0, 4.0]
         selected_variance = means["1-exported-data"]['variance']
-        fig, axes = plt.subplots(1, len(selected_frequencies), figsize=(12, 3), sharey=False, layout="constrained")
+        fig, axes = plt.subplots(1, len(selected_frequencies), figsize=(18, 3), sharey=False, layout="constrained")
         axes[0].set_ylabel('Squared Distance Error ($ m^2 $)')
         variance_subplot(means['1-exported-data'].mean(dim='time'), stdevs['1-exported-data'].mean(dim='time'), axes, selected_frequencies, 'ACLP', 0.7)
         variance_subplot(means["2-exported-data"].mean(dim='time'), stdevs["2-exported-data"].mean(dim="time"), axes, selected_frequencies, 'ACLI', 0.2)
