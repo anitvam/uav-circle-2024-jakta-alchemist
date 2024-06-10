@@ -107,8 +107,6 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 args(
                     "--override",
                     "terminate: { type: AfterTime, parameters: [2] }",
-                    "--override",
-                    "launcher: { parameters: { batch: [], autoStart: true } }",
                 )
             } else {
                 this.additionalConfiguration()
