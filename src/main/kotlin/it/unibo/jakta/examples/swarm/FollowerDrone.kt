@@ -34,9 +34,9 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
                 }
             }
         }
-        agent("drone") {
+        agent("follower") {
             addData("id", node.id)
-            addData("agent", "drone@$node.id")
+            addData("agent", "follower@$node.id")
             followerLogic()
         }
     }
