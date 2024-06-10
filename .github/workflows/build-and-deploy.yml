@@ -85,7 +85,7 @@ jobs:
         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
         with:
           submodules: recursive
-          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Download charts artifact
         uses: actions/download-artifact@v4.1.7
         with:
@@ -100,11 +100,11 @@ jobs:
       - name: Login to dockerhub
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: danysk
+          DOCKER_USERNAME: anitvam
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
       - name: Semantic Release
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm install
           npx semantic-release
