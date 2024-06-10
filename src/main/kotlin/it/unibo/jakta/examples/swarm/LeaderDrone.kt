@@ -3,7 +3,6 @@
 package it.unibo.jakta.examples.swarm
 
 import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
-import it.unibo.alchemist.jakta.util.fix
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.jakta.agents.bdi.Agent
@@ -12,7 +11,6 @@ import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.dsl.device
 import it.unibo.jakta.examples.swarm.CircleMovement.positionInCircumference
 import it.unibo.jakta.examples.swarm.DronesLogic.leaderLogic
-import it.unibo.tuprolog.core.Integer
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI

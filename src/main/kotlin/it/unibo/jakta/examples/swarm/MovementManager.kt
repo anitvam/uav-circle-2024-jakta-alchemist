@@ -7,12 +7,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object CircleMovement {
-    fun createCircleCenter(leaderPosition: SwarmPosition, radius: Double): SwarmPosition =
-        SwarmPosition(
-            leaderPosition.x + radius,
-            leaderPosition.y,
-        )
-
     fun positionInCircumference(
         radius: Double,
         radians: Double,
