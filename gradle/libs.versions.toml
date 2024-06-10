@@ -2,7 +2,7 @@
 alchemist = "34.0.13"
 kotlin = "2.0.0"
 jakta = "0.11.0"
-kotest = "5.9.0"
+kotest = "5.9.1"
 
 [libraries]
 alchemist = { module = "it.unibo.alchemist:alchemist", version.ref = "alchemist" }
