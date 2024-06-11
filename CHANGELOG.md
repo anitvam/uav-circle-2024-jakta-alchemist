@@ -1,3 +1,15 @@
+## [1.0.2](https://github.com/anitvam/dsrt-2024-jakta-alchemist/compare/1.0.1...1.0.2) (2024-06-11)
+
+
+### Bug Fixes
+
+* update charts colors ([9ccd2ee](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/9ccd2eee3ebf31dea6246ac12a91e17f7d85dba3))
+
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.1 [skip ci] ([114a05b](https://github.com/anitvam/dsrt-2024-jakta-alchemist/commit/114a05b848060366b48a4fec2ba6c700f2a23b0b))
+
 ## [1.0.1](https://github.com/anitvam/dsrt-2024-jakta-alchemist/compare/1.0.0...1.0.1) (2024-06-10)
 
 
