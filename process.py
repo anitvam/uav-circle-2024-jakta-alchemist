@@ -520,8 +520,8 @@ if __name__ == '__main__':
         selected_variance = means["1-exported-data"]['variance']
         fig, axes = plt.subplots(1, len(selected_frequencies), figsize=(18, 3), sharey=False, layout="constrained")
         axes[0].set_ylabel('Squared Distance Error ($ m^2 $)')
-        variance_subplot(means['1-exported-data'].mean(dim='time'), stdevs['1-exported-data'].mean(dim='time'), axes, selected_frequencies, 'ACLP', 0.7)
-        variance_subplot(means["2-exported-data"].mean(dim='time'), stdevs["2-exported-data"].mean(dim="time"), axes, selected_frequencies, 'ACLI', 0.2)
+        variance_subplot(means['1-exported-data'].mean(dim='time'), stdevs['1-exported-data'].mean(dim='time'), axes, selected_frequencies, 'ACLP', 0.1)
+        variance_subplot(means["2-exported-data"].mean(dim='time'), stdevs["2-exported-data"].mean(dim="time"), axes, selected_frequencies, 'ACLI', 0.7)
         variance_baseline_subplot(means["3-exported-data"].mean(dim='time'), stdevs["3-exported-data"].mean(dim='time'), axes, selected_variance, "AMA@1Hz", 'k')
         fig.tight_layout()
         Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
