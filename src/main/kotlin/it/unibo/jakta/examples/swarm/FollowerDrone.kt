@@ -29,6 +29,7 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
                         center,
                     )
                     val movement = destinationPosition - myPosition
+                    // set Node property in the environment
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
                     node.setConcentration(destination, destinationPosition)
                 }
