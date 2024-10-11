@@ -1,3 +1,60 @@
+## [1.0.4](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.0.3...1.0.4) (2024-10-11)
+
+### Dependency updates
+
+* **deps:** update alchemist to v34.1.3 ([74e7db4](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/74e7db4a1287c5026e5845279a5f7472c0488567))
+* **deps:** update alchemist to v34.1.4 ([bb5f630](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/bb5f630e8657928df92a1c17f86aae54a24b0c4a))
+* **deps:** update alpine docker tag to v3.20.3 ([8d1e2c5](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/8d1e2c548bbb738f1c07fcc103c95ac466c615d3))
+* **deps:** update dependency gradle to v8.10.1 ([2c0d1c3](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/2c0d1c315171ca3f6dc94ca51f274937b3d02469))
+* **deps:** update dependency gradle to v8.10.2 ([e0cb7e1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/e0cb7e162ea0fe460e9f2950fa3fa25d01cad5a7))
+* **deps:** update dependency org.jetbrains.kotlin.jvm to v2.0.21 ([06549c0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/06549c0fb701b2c0e5f607cd5269f937d9e91a97))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.102 ([c372f69](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/c372f69a0df55c64d55e9dea6d26336c4fcbb511))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.103 ([dfbf40b](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/dfbf40bad7c3473541133d208d8b6ea8b127f94d))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.104 ([46804b1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/46804b1784c53c1619d028921921682ff981d2e0))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.105 ([a3c9a9d](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a3c9a9dc4d32b11f6e9bd7d51b7531904521da10))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.106 ([f69b9e2](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/f69b9e2598a5977b071cab95852c5b2248578d33))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.107 ([a174bcd](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a174bcd0ce0b8ad4e025d504b921e771c5620ac3))
+* **deps:** update dependency xarray to v2024.9.0 ([168d053](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/168d0532c76a719ae6a4f1eb447833f621773d4a))
+* **deps:** update node.js to 20.18 ([faaef8f](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/faaef8f91191956e2ac714a605d921a984b7a998))
+* **deps:** update plugin com.gradle.enterprise to v3.18.1 ([27dd9a1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/27dd9a13a8f3998f4f7af24f6db5ae4cc0e4704f))
+* **deps:** update plugin kotlin-qa to v0.66.0 ([3c6ed55](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/3c6ed55d489173ffbe2afa4f86531c3885086ecc))
+* **deps:** update plugin kotlin-qa to v0.66.1 ([bd2b1f8](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/bd2b1f811b672fda55eddcf76edc583e26245fa5))
+* **deps:** update plugin kotlin-qa to v0.67.0 ([3cdb78f](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/3cdb78f57977597ba83e4cd067a94dae5d2fb0bf))
+* **deps:** update plugin kotlin-qa to v0.67.1 ([7e11f3f](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/7e11f3f041e018d0a938b797f666c4c9725619f0))
+* **deps:** update plugin kotlin-qa to v0.67.2 ([5d243b7](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/5d243b7214fae1ffdef3451d22db102484d79b88))
+* **deps:** update plugin kotlin-qa to v0.67.3 ([bd924bd](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/bd924bdb6938c9d3b9abddca20ecf15a2ecab5d8))
+* **deps:** update plugin kotlin-qa to v0.68.0 ([d6cbc05](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/d6cbc051cc7e9295510f0a801d31a71d652ad71f))
+* **deps:** update plugin multijvmtesting to v1.2.6 ([a6cfbb9](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a6cfbb945cc077ad083176bb7dbb88ec4eeb45d9))
+* **deps:** update plugin multijvmtesting to v1.2.7 ([e97ec58](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/e97ec58518b65c79d82aff306907e4b78d4ea3c7))
+* **deps:** update plugin multijvmtesting to v1.2.8 ([472e2ef](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/472e2ef9477a34201ee441489bc0606cf345a710))
+* **deps:** update python docker tag to v3.12.6 ([f8c055a](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/f8c055a3afa17ba9bc6df840542cfe541c3e8499))
+* **deps:** update python docker tag to v3.12.7 ([0c32419](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/0c3241904c319886dfe923e5bd43d7e08c7bac2a))
+
+### Bug Fixes
+
+* add documentations ([eeb9f1f](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/eeb9f1fc71bca2e9dd07164e0eb9018e8b1b0976))
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v4.2.0 ([c9d6567](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/c9d656733df5cf7b4e1b7a90c4f94c74918f670e))
+* **deps:** update actions/checkout action to v4.2.1 ([c62e4c1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/c62e4c1ad4ab085dafd25da30b329d8e8dbcfd24))
+* **deps:** update actions/setup-node action to v4.0.4 ([3ebc19f](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/3ebc19fe32e08ccc53920d7153db461688caabc8))
+* **deps:** update actions/upload-artifact action to v4.4.0 ([66cb062](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/66cb062c0db01f2ca6bc67436e3f8e15451831a2))
+* **deps:** update actions/upload-artifact action to v4.4.1 ([85cc630](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/85cc6300db0dca691ba0f8975962a10da905ee1f))
+* **deps:** update actions/upload-artifact action to v4.4.2 ([de265c0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/de265c093d3ec602d5bb6635b548e3c548efcda0))
+* **deps:** update actions/upload-artifact action to v4.4.3 ([d5fc2f4](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/d5fc2f427af4e560f25c33fdf5fc65ac450c4bae))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.10 ([57a4169](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/57a4169759e7cd4e02db17fb0c7481d982b0f0b9))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.5 ([eb61743](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/eb61743f43ff48c0fe6155b9d9121c6e0e0771d9))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.6 ([7d078be](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/7d078beff785735323163a1155d5beaa8733508f))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.7 ([a0d1414](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a0d1414ecb8c9a25f16fd35d7b18924da0faff48))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.8 ([ad6459e](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/ad6459e1d03d03c7b13ebd60d918f8703230815c))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.9 ([fb52381](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/fb5238195de39678ccc84bf8d73a159a2b352973))
+* **deps:** update dependency ubuntu github actions runner to v24 ([f9706e5](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/f9706e50c919ea3a8e4697c341a43a3622113b06))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.3 [skip ci] ([7f03b1e](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/7f03b1ebca1bbaa9f0d49a1b2d6e17c2e1024b64))
+
 ## [1.0.3](https://github.com/anitvam/dsrt-2024-jakta-alchemist/compare/1.0.2...1.0.3) (2024-08-29)
 
 ### Dependency updates
