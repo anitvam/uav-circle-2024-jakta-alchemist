@@ -1,7 +1,7 @@
 [versions]
 alchemist = "34.1.14"
 kotlin = "2.0.21"
-jakta = "0.11.91"
+jakta = "0.11.92"
 kotest = "5.9.1"
 
 [libraries]
