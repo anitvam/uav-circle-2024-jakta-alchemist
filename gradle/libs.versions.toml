@@ -1,5 +1,5 @@
 [versions]
-alchemist = "35.0.1"
+alchemist = "35.0.2"
 kotlin = "2.0.21"
 jakta = "0.11.105"
 kotest = "5.9.1"
