@@ -2,11 +2,10 @@ package it.unibo.alchemist.boundary.extractors
 
 import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
-import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.jakta.examples.swarm.CircleMovement
-import it.unibo.jakta.examples.swarm.SwarmPosition
+import it.unibo.jakta.examples.simulation.CircleMovement
+import it.unibo.jakta.examples.simulation.SwarmPosition
 import kotlin.math.PI
 import kotlin.math.hypot
 

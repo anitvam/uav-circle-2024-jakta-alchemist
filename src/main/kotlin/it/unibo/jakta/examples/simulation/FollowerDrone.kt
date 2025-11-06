@@ -1,12 +1,12 @@
 @file:JvmName("Drone")
 
-package it.unibo.jakta.examples.swarm
+package it.unibo.jakta.examples.simulation
 
 import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
 import it.unibo.alchemist.jakta.util.fix
 import it.unibo.alchemist.model.Position
 import it.unibo.jakta.agents.dsl.device
-import it.unibo.jakta.examples.swarm.DronesLogic.followerLogic
+import it.unibo.jakta.examples.simulation.DronesLogic.followerLogic
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 

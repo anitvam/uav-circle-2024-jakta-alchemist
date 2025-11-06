@@ -1,4 +1,4 @@
-package it.unibo.jakta.examples.swarm
+package it.unibo.jakta.examples.simulation
 
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Position
@@ -22,7 +22,7 @@ object CircleMovement {
 }
 
 data class SwarmPosition(val x: Double, val y: Double) {
-    fun <P : Position<P>> toPosition(alchemistEnvironment: Environment<*, P>): P =
+    fun <P : Position<P>> toAlchemistPosition(alchemistEnvironment: Environment<*, P>): P =
         alchemistEnvironment.makePosition(x, y)
 
     operator fun plus(other: SwarmPosition): SwarmPosition = SwarmPosition(x + other.x, y + other.y)

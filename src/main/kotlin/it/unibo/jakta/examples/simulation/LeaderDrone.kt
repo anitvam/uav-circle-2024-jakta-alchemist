@@ -1,6 +1,6 @@
 @file:JvmName("LeaderDrone")
 
-package it.unibo.jakta.examples.swarm
+package it.unibo.jakta.examples.simulation
 
 import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
 import it.unibo.alchemist.model.Position
@@ -9,8 +9,8 @@ import it.unibo.jakta.agents.bdi.Agent
 import it.unibo.jakta.agents.bdi.messages.Achieve
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.dsl.device
-import it.unibo.jakta.examples.swarm.CircleMovement.positionInCircumference
-import it.unibo.jakta.examples.swarm.DronesLogic.leaderLogic
+import it.unibo.jakta.examples.simulation.CircleMovement.positionInCircumference
+import it.unibo.jakta.examples.simulation.DronesLogic.leaderLogic
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
