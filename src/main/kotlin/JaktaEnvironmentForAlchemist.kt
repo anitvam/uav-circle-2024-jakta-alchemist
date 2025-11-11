@@ -1,4 +1,5 @@
 package it.unibo.alchemist.jakta.properties
+import it.unibo.BdiSimulationIntegrationEnvironment
 import it.unibo.alchemist.jakta.JaktaForAlchemistLibrary
 import it.unibo.alchemist.jakta.JaktaForAlchemistLibrary.ExternalActionFor
 import it.unibo.alchemist.jakta.JaktaForAlchemistMessageBroker
@@ -17,6 +18,8 @@ import it.unibo.jakta.agents.bdi.environment.Environment
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.bdi.messages.MessageQueue
 import it.unibo.jakta.agents.bdi.perception.Perception
+import it.unibo.jakta.agents.dsl.JaktaForAlchemistMasScope
+import it.unibo.jakta.agents.dsl.WrappedAgent
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
@@ -27,14 +30,14 @@ import it.unibo.jakta.agents.bdi.environment.Environment as JaktaEnvironment
 /**
  * Jakta Environment Implementation that connects to Alchemist meta-model.
  */
-class JaktaEnvironmentForAlchemist<P : Position<P>>(
+open class JaktaEnvironmentForAlchemist<P : Position<P>>(
     val alchemistEnvironment: AlchemistEnvironment<Any?, P>,
     val randomGenerator: RandomGenerator,
     // Alchemist NodeProperty inheritance
     override val node: Node<Any?>,
     // Jakta Environment inheritance
     override val messageBoxes: Map<AgentID, MessageQueue> = emptyMap(),
-) : JaktaEnvironment, NodeProperty<Any?> {
+) : JaktaEnvironment, NodeProperty<Any?>, BdiSimulationIntegrationEnvironment<P, WrappedAgent, JaktaForAlchemistMasScope> {
 
     override val agentIDs: Map<String, AgentID> get() =
         node.reactions.asSequence()
@@ -142,6 +145,15 @@ class JaktaEnvironmentForAlchemist<P : Position<P>>(
 
     override var externalActions: Map<String, ExternalAction> = JaktaForAlchemistLibrary(this).api() +
         ("run" to run)
+
+    override fun getPosition(): P = alchemistEnvironment.getPosition(node)
+
+    override val deviceId: Int
+        get() = node.id
+
+    override fun device(f: JaktaForAlchemistMasScope.() -> Unit) {
+        this.device { f() }
+    }
 
     companion object {
         val BROKER_MOLECULE = SimpleMolecule("MessageBroker")

@@ -1,6 +1,7 @@
 import org.gradle.configurationcache.extensions.capitalized
 import java.awt.GraphicsEnvironment
 import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
@@ -139,3 +140,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
         }
         runAllBatch.dependsOn(batch)
     }
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.compilerOptions {
+    freeCompilerArgs.set(listOf("-Xcontext-parameters"))
+}

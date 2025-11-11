@@ -49,7 +49,7 @@ _pool: &leader
       type: DiracComb
       parameters: [0, 1]
     program:
-      agent-factory: it.unibo.jakta.examples.swarm.LeaderDrone.leader
+      agent-factory: it.unibo.jakta.examples.simulation.LeaderDrone.leader
       parameters: [*sightRadius, *sightRadius, *followRadius]
 
 _program: &drone
@@ -68,7 +68,7 @@ _program: &drone
           type: ExponentialTime
           parameters: *lambda-act
     program:
-      agent-factory: it.unibo.jakta.examples.swarm.Drone.follower
+      agent-factory: it.unibo.jakta.examples.simulation.Drone.follower
       parameters: []
 
 deployments:
