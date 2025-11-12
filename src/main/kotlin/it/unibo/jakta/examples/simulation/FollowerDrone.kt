@@ -10,6 +10,7 @@ import it.unibo.jakta.examples.main.MainSwarmEnvironment
 import it.unibo.jakta.examples.simulation.DronesLogic.followerLogic
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
+import kotlin.random.Random
 
 fun <P: Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
     device {
@@ -63,7 +64,7 @@ fun MainSwarmEnvironment.followerMain() =
                     val movement = destinationPosition - myPosition
                     // set Node property in the environment
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
-                    println("[FOLLOWER]: Next position $destinationPosition")
+                    println("[$sender]: Next position $destinationPosition")
                     addData(destination.name, destinationPosition)
                 }
             }

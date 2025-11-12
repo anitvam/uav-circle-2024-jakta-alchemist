@@ -1,9 +1,10 @@
 package it.unibo.jakta.agents.bdi
 
-import java.util.*
+import kotlin.random.Random
+
 
 data class AgentID(val id: String = generateId()) {
     companion object {
-        private fun generateId(): String = Random(System.currentTimeMillis()).nextInt().toString()
+        private fun generateId(): String = Random.nextInt(0, 1000).toString()
     }
 }

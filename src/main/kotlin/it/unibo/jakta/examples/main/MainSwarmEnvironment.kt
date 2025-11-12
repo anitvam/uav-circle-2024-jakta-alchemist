@@ -21,7 +21,7 @@ class MainSwarmEnvironment(
         private set
     private val positions: MutableMap<String, SwarmPosition>  = mutableMapOf()
     private val actions: MutableMap<String, ExternalAction> = mutableMapOf()
-    private val id = Random(System.currentTimeMillis()).nextInt()
+    private val id = Random.nextInt(0, 1000)
     private val envData: MutableMap<String, Any> = mutableMapOf()
 
     override val data: Map<String, Any>
@@ -43,7 +43,7 @@ class MainSwarmEnvironment(
     override fun getTime(): Double =
         System.currentTimeMillis().toDouble()
 
-    override fun getNeighborIds(): List<Int> = mas?.agents?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
+    override fun getNeighborIds(): List<Int> = mas?.agents?.also { println(it) }?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
 
     override fun addData(key: String, value: Any): Environment {
         envData[key] = value

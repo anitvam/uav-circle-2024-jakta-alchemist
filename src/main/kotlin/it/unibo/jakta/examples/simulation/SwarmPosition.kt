@@ -25,8 +25,8 @@ data class SwarmPosition(
             SwarmPosition(doubleArray[0], doubleArray[1])
 
         fun random(): SwarmPosition = SwarmPosition(
-            Random(System.nanoTime()).nextDouble(),
-            Random(System.nanoTime()).nextDouble(),
+            Random.nextDouble(),
+            Random.nextDouble(),
         )
 
         fun fromPosition(position: Any): SwarmPosition {
