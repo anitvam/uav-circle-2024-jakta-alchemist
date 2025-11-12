@@ -146,14 +146,18 @@ open class JaktaEnvironmentForAlchemist<P : Position<P>>(
     override var externalActions: Map<String, ExternalAction> = JaktaForAlchemistLibrary(this).api() +
         ("run" to run)
 
-    override fun getPosition(): P = alchemistEnvironment.getPosition(node)
+    override fun getPosition(agentName: String): P = alchemistEnvironment.getPosition(node)
 
     override val deviceId: Int
         get() = node.id
 
-    override fun device(f: JaktaForAlchemistMasScope.() -> Unit) {
-        this.device { f() }
-    }
+    override fun getTime(): Double =
+        alchemistEnvironment.simulation.time.toDouble()
+
+    override fun getNeighborIds(): List<Int> =
+        alchemistEnvironment.getNeighborhood(node)
+            .map { it.id }
+
 
     companion object {
         val BROKER_MOLECULE = SimpleMolecule("MessageBroker")

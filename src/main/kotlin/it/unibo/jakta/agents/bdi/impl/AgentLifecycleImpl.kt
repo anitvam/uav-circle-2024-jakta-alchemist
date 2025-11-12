@@ -296,7 +296,6 @@ internal data class AgentLifecycleImpl(
                 is Pause -> controller?.pause()
                 is Sleep -> controller?.sleep(it.millis)
                 is Stop -> controller?.stop()
-                else -> Unit
             }
         }
         return context.copy(
