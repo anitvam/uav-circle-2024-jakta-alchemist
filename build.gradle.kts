@@ -25,6 +25,10 @@ sourceSets {
     }
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 val usesJvm: Int = File(File(projectDir, "docker/sim"), "Dockerfile")
     .readLines()
     .first { it.isNotBlank() }
