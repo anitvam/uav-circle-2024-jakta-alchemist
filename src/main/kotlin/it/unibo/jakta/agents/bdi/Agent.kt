@@ -59,13 +59,17 @@ interface Agent : Taggable<Agent> {
         ): Agent = AgentImpl(
             AgentContext.of(beliefBase, events, planLibrary, internalActions),
             agentID,
-            name + "@${agentID.id}",
+            if (name.contains("@")) name else name + "@${agentID.id}",
         )
 
         fun of(
             agentID: AgentID = AgentID(),
             name: String = "Agent@${agentID.id}",
             agentContext: AgentContext,
-        ): Agent = AgentImpl(agentContext, agentID, name + "@${agentID.id}")
+        ): Agent = AgentImpl(
+            agentContext,
+            agentID,
+            if (name.contains("@")) name else name + "@${agentID.id}",
+        )
     }
 }

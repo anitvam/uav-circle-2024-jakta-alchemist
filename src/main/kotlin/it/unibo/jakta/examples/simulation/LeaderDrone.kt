@@ -62,6 +62,7 @@ fun MainSwarmEnvironment.leaderMain(radius: Double, sightRadius: Double, followR
             actions {
                 action("circleMovementStep", 0) {
                     val initialPosition = SwarmPosition.fromPosition(getPosition(sender))
+
                     val r = data["radius"] as? Number ?: error("Missing radius as Node molecule. $data")
                     val center = SwarmPosition(0.0, 0.0)//data["centerPosition"]
                     val nextPosition = positionInCircumference(

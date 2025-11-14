@@ -16,9 +16,9 @@ import it.unibo.jakta.examples.simulation.leaderMain
 fun main() {
         val e = MainSwarmEnvironment()
         e.leaderMain(SIGHT_RADIUS, SIGHT_RADIUS, FOLLOW_RADIUS)
-        for(i in 1..10)
+        for(i in 1..5)
             e.followerMain()
-        e.mas?.start(debugEnabled = false)
+        e.mas?.start()
     }
 
 

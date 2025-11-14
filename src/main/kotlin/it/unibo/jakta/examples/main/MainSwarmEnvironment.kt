@@ -33,7 +33,8 @@ class MainSwarmEnvironment(
 
 
     override fun getPosition(agentName: String): SwarmPosition = positions.getOrElse(agentName) {
-        throw IllegalArgumentException("Unknown agent: $agentName")
+        println("Unknown agent: $agentName")
+        throw IllegalStateException("Unknown agent: $agentName")
     }
 
     fun setPosition(agentName: String, position: SwarmPosition) {
@@ -43,7 +44,7 @@ class MainSwarmEnvironment(
     override fun getTime(): Double =
         System.currentTimeMillis().toDouble()
 
-    override fun getNeighborIds(): List<Int> = mas?.agents?.also { println(it) }?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
+    override fun getNeighborIds(): List<Int> = mas?.agents?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
 
     override fun addData(key: String, value: Any): Environment {
         envData[key] = value
@@ -53,6 +54,7 @@ class MainSwarmEnvironment(
         val masScope = MasScope().also(f)
         this.actions.putAll(masScope.env.externalActions)
         this.positions.putAll(masScope.agents.map { it.name to SwarmPosition.random() })
+        println(positions)
         if (mas == null) {
             mas = masScope.environment(this).build()
         } else {
