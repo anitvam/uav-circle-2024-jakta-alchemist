@@ -11,4 +11,4 @@ develocity {
     }
 }
 
-rootProject.name = "experiments-2024-dsrt-simulation-bdi-jakta-alchemist"
+rootProject.name = "uav-circle-2024-jakta-alchemist"
