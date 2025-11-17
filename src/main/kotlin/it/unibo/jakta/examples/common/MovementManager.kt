@@ -1,5 +1,6 @@
-package it.unibo.jakta.examples.simulation
+package it.unibo.jakta.examples.common
 
+import it.unibo.jakta.examples.common.SwarmPosition
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

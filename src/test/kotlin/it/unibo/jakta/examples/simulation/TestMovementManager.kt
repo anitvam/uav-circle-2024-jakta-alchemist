@@ -2,7 +2,9 @@ package it.unibo.jakta.examples.simulation
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
-import it.unibo.jakta.examples.simulation.CircleMovement.degreesToRadians
+import it.unibo.jakta.examples.common.CircleMovement
+import it.unibo.jakta.examples.common.CircleMovement.degreesToRadians
+import it.unibo.jakta.examples.common.SwarmPosition
 import kotlin.math.sqrt
 
 class TestMovementManager : FreeSpec({

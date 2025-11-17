@@ -4,8 +4,8 @@ import it.unibo.alchemist.model.Actionable
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.jakta.examples.simulation.CircleMovement
-import it.unibo.jakta.examples.simulation.SwarmPosition
+import it.unibo.jakta.examples.common.CircleMovement
+import it.unibo.jakta.examples.common.SwarmPosition
 import kotlin.math.PI
 import kotlin.math.hypot
 

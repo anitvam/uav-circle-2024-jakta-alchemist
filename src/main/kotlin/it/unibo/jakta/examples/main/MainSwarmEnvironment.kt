@@ -1,15 +1,13 @@
 package it.unibo.jakta.examples.main
 
-import it.unibo.BdiSimulationIntegrationEnvironment
-import it.unibo.jakta.agents.bdi.AgentID
+import it.unibo.jakta.examples.common.BdiSimulationIntegrationEnvironment
 import it.unibo.jakta.agents.bdi.Mas
 import it.unibo.jakta.agents.bdi.actions.ExternalAction
 import it.unibo.jakta.agents.bdi.dsl.MasScope
 import it.unibo.jakta.agents.bdi.environment.Environment
 import it.unibo.jakta.agents.bdi.environment.impl.EnvironmentImpl
 import it.unibo.jakta.agents.bdi.perception.Perception
-import it.unibo.jakta.examples.simulation.SwarmPosition
-import kotlinx.coroutines.MainScope
+import it.unibo.jakta.examples.common.SwarmPosition
 import kotlin.random.Random
 
 class MainSwarmEnvironment(

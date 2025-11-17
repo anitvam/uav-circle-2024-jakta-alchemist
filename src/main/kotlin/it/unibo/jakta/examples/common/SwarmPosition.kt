@@ -1,12 +1,7 @@
-package it.unibo.jakta.examples.simulation
+package it.unibo.jakta.examples.common
 
 import it.unibo.alchemist.model.Environment
 import it.unibo.alchemist.model.Position
-import it.unibo.alchemist.model.Position2D
-import it.unibo.alchemist.model.geometry.Vector2D
-import it.unibo.alchemist.model.positions.AbstractEuclideanPosition
-import it.unibo.alchemist.model.positions.AbstractPosition
-import it.unibo.alchemist.model.positions.Euclidean2DPosition
 import kotlin.random.Random
 
 data class SwarmPosition(
@@ -25,8 +20,8 @@ data class SwarmPosition(
             SwarmPosition(doubleArray[0], doubleArray[1])
 
         fun random(): SwarmPosition = SwarmPosition(
-            Random.nextDouble(),
-            Random.nextDouble(),
+            Random.Default.nextDouble(),
+            Random.Default.nextDouble(),
         )
 
         fun fromPosition(position: Any): SwarmPosition {

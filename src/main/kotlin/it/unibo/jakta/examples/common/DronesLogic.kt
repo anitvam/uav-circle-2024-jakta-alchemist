@@ -1,9 +1,6 @@
-package it.unibo.jakta.examples.simulation
+package it.unibo.jakta.examples.common
 
 import it.unibo.jakta.agents.bdi.dsl.AgentScope
-import it.unibo.jakta.agents.bdi.dsl.mas
-import it.unibo.jakta.examples.simulation.DronesLogic.followerLogic
-import it.unibo.jakta.examples.simulation.DronesLogic.leaderLogic
 
 object DronesLogic {
 

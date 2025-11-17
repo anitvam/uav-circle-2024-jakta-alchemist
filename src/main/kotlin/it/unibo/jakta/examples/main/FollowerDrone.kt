@@ -1,18 +1,14 @@
-@file:JvmName("Drone")
+package it.unibo.jakta.examples.main
 
-package it.unibo.jakta.examples.simulation
-
-import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
 import it.unibo.alchemist.jakta.util.fix
-import it.unibo.alchemist.model.Position
-import it.unibo.jakta.agents.dsl.device
 import it.unibo.jakta.examples.common.CircleMovement
 import it.unibo.jakta.examples.common.DronesLogic.followerLogic
 import it.unibo.jakta.examples.common.SwarmPosition
+import it.unibo.jakta.examples.simulation.destination
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 
-fun <P: Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
+fun MainSwarmEnvironment.followerMain() =
     device {
         environment {
             actions {
@@ -21,7 +17,6 @@ fun <P: Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
                     val radius = argument<ObjectRef>(1).fix<Double>()
                     val otherNodes = argument<ObjectRef>(2).fix<Set<Int>>()
                     val myPosition = SwarmPosition.fromPosition(getPosition(sender))
-
                     // Compute my destination in the circle
                     val angles = (2 * PI) / otherNodes.count()
                     val destinationAngle = otherNodes.sorted().indexOf(deviceId) * angles

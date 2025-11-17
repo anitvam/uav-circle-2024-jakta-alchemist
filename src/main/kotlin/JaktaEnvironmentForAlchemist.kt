@@ -1,5 +1,5 @@
 package it.unibo.alchemist.jakta.properties
-import it.unibo.BdiSimulationIntegrationEnvironment
+import it.unibo.jakta.examples.common.BdiSimulationIntegrationEnvironment
 import it.unibo.alchemist.jakta.JaktaForAlchemistLibrary
 import it.unibo.alchemist.jakta.JaktaForAlchemistLibrary.ExternalActionFor
 import it.unibo.alchemist.jakta.JaktaForAlchemistMessageBroker

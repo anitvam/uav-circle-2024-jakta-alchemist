@@ -1,23 +1,16 @@
-@file:JvmName("LeaderDrone")
+package it.unibo.jakta.examples.main
 
-package it.unibo.jakta.examples.simulation
-
-import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist
-import it.unibo.alchemist.model.Position
-import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.jakta.agents.bdi.messages.Achieve
 import it.unibo.jakta.agents.bdi.messages.Message
-import it.unibo.jakta.agents.dsl.device
 import it.unibo.jakta.examples.common.CircleMovement.positionInCircumference
 import it.unibo.jakta.examples.common.DronesLogic.leaderLogic
 import it.unibo.jakta.examples.common.SwarmPosition
+import it.unibo.jakta.examples.simulation.destination
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 
-val destination = SimpleMolecule("desiredPosition")
-
-fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sightRadius: Double, followRadius: Double) =
+fun MainSwarmEnvironment.leaderMain(radius: Double, sightRadius: Double, followRadius: Double) =
     device {
         environment {
             actions {
