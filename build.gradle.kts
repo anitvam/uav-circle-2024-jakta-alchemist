@@ -1,4 +1,3 @@
-import org.gradle.configurationcache.extensions.capitalized
 import java.awt.GraphicsEnvironment
 import java.io.ByteArrayOutputStream
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -7,7 +6,6 @@ plugins {
     application
     alias(libs.plugins.gitSemVer)
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.multiJvmTesting)
     alias(libs.plugins.taskTree)
 }
 
@@ -25,10 +23,6 @@ sourceSets {
     }
 }
 
-kotlin {
-    jvmToolchain(21)
-}
-
 val usesJvm: Int = File(File(projectDir, "docker/sim"), "Dockerfile")
     .readLines()
     .first { it.isNotBlank() }
@@ -38,8 +32,8 @@ val usesJvm: Int = File(File(projectDir, "docker/sim"), "Dockerfile")
     }
     .toInt()
 
-multiJvm {
-    jvmVersionForCompilation.set(usesJvm)
+kotlin {
+    jvmToolchain(usesJvm)
 }
 
 dependencies {
@@ -96,13 +90,13 @@ val runAllBatch by tasks.register<DefaultTask>("runAllBatch") {
 File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
     ?.filter { it.extension == "yml" }
     ?.sortedBy { it.nameWithoutExtension }
-    ?.forEach {
+    ?.forEach { simFile ->
         fun basetask(name: String, additionalConfiguration: JavaExec.() -> Unit = {}) = tasks.register<JavaExec>(name) {
             group = alchemistGroup
-            description = "Launches graphic simulation ${it.nameWithoutExtension}"
+            description = "Launches graphic simulation ${simFile.nameWithoutExtension}"
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
-            args("run", it.absolutePath)
+            args("run", simFile.absolutePath)
             javaLauncher.set(
                 javaToolchains.launcherFor {
                     languageVersion.set(JavaLanguageVersion.of(usesJvm))
@@ -117,7 +111,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 this.additionalConfiguration()
             }
         }
-        val capitalizedName = it.nameWithoutExtension.capitalized()
+        val capitalizedName = simFile.nameWithoutExtension.replaceFirstChar{ it.titlecase() }
         val graphic by basetask("run${capitalizedName}Graphic") {
             args(
                 "--override",
