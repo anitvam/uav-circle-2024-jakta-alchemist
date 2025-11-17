@@ -37,6 +37,10 @@ multiJvm {
     jvmVersionForCompilation.set(usesJvm)
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(libs.bundles.alchemist.dev)
