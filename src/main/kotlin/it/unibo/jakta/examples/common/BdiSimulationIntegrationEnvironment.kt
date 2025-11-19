@@ -1,6 +1,7 @@
 package it.unibo.jakta.examples.common
 
 import it.unibo.jakta.agents.bdi.dsl.Builder
+import it.unibo.jakta.agents.bdi.dsl.actions.ExternalActionsScope
 import it.unibo.jakta.agents.bdi.environment.Environment
 
 interface BdiSimulationIntegrationEnvironment<
@@ -9,9 +10,11 @@ interface BdiSimulationIntegrationEnvironment<
     B: Builder<Building>,
 >: Environment {
 
+    fun setDesiredPosition(agentName: String, position: SwarmPosition)
+
     fun getPosition(agentName: String): P
 
-    val deviceId: Int
+    fun deviceId(agentName: String): Int
 
     fun getTime(): Double
 

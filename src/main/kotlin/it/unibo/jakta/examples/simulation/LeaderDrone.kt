@@ -15,8 +15,6 @@ import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 
-val destination = SimpleMolecule("desiredPosition")
-
 fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sightRadius: Double, followRadius: Double) =
     device {
         environment {
@@ -34,7 +32,7 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sig
                     val movement = nextPosition - initialPosition
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
                     println("[LEADER]: Next position $nextPosition")
-                    addData(destination.name, nextPosition)
+                    setDesiredPosition(sender, nextPosition)
                 }
                 action("notifyAgent", 1) {
                     val participants = getNeighborIds().toSet()
@@ -48,8 +46,9 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sig
                 }
             }
         }
-        agent("leader") {
-            addData("id", deviceId)
+        val agentName = "leader"
+        agent(agentName) {
+            addData("id", deviceId(agentName))
             addData("sightRadius", sightRadius)
             addData("radius", radius)
             addData("followRadius", followRadius)

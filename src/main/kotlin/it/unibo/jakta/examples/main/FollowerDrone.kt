@@ -4,7 +4,6 @@ import it.unibo.alchemist.jakta.util.fix
 import it.unibo.jakta.examples.common.CircleMovement
 import it.unibo.jakta.examples.common.DronesLogic.followerLogic
 import it.unibo.jakta.examples.common.SwarmPosition
-import it.unibo.jakta.examples.simulation.destination
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
 
@@ -19,7 +18,7 @@ fun MainSwarmEnvironment.followerMain() =
                     val myPosition = SwarmPosition.fromPosition(getPosition(sender))
                     // Compute my destination in the circle
                     val angles = (2 * PI) / otherNodes.count()
-                    val destinationAngle = otherNodes.sorted().indexOf(deviceId) * angles
+                    val destinationAngle = otherNodes.sorted().indexOf(deviceId(sender)) * angles // DeviceId needs to refer to this node id.
                     val destinationPosition = CircleMovement.positionInCircumference(
                         radius,
                         destinationAngle,
@@ -29,13 +28,14 @@ fun MainSwarmEnvironment.followerMain() =
                     // set Node property in the environment
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
                     println("[$sender]: Next position $destinationPosition")
-                    addData(destination.name, destinationPosition)
+                    setDesiredPosition(sender, destinationPosition)
                 }
             }
         }
-        agent("follower") {
-            addData("id", deviceId)
-            addData("agent", "follower@${deviceId}")
+        val agentName = "follower"
+        agent(agentName) {
+            addData("id", deviceId(agentName))
+            addData("agent", "$agentName@${deviceId(agentName)}")
             followerLogic()
         }
     }

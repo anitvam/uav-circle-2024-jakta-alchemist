@@ -24,7 +24,7 @@ fun <P: Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
 
                     // Compute my destination in the circle
                     val angles = (2 * PI) / otherNodes.count()
-                    val destinationAngle = otherNodes.sorted().indexOf(deviceId) * angles
+                    val destinationAngle = otherNodes.sorted().indexOf(deviceId(sender)) * angles
                     val destinationPosition = CircleMovement.positionInCircumference(
                         radius,
                         destinationAngle,
@@ -34,13 +34,14 @@ fun <P: Position<P>> JaktaEnvironmentForAlchemist<P>.follower() =
                     // set Node property in the environment
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
                     println("[$sender]: Next position $destinationPosition")
-                    addData(destination.name, destinationPosition)
+                    setDesiredPosition(sender, destinationPosition)
                 }
             }
         }
-        agent("follower") {
-            addData("id", deviceId)
-            addData("agent", "follower@${deviceId}")
+        val agentName = "follower"
+        agent(agentName) {
+            addData("id", deviceId(agentName))
+            addData("agent", "$agentName@${deviceId(agentName)}")
             followerLogic()
         }
     }

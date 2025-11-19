@@ -1,9 +1,12 @@
 package it.unibo.jakta.examples.common
 
+import it.unibo.alchemist.model.molecules.SimpleMolecule
 import it.unibo.jakta.examples.common.SwarmPosition
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+
+val destination = SimpleMolecule("desiredPosition")
 
 object CircleMovement {
     fun positionInCircumference(
@@ -19,3 +22,5 @@ object CircleMovement {
         return degrees * PI / 180
     }
 }
+
+

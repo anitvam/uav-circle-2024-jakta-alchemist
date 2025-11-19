@@ -14,12 +14,15 @@ import it.unibo.jakta.agents.bdi.Agent
 import it.unibo.jakta.agents.bdi.AgentID
 import it.unibo.jakta.agents.bdi.actions.ExternalAction
 import it.unibo.jakta.agents.bdi.beliefs.Belief
+import it.unibo.jakta.agents.bdi.dsl.actions.ExternalActionsScope
 import it.unibo.jakta.agents.bdi.environment.Environment
 import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.agents.bdi.messages.MessageQueue
 import it.unibo.jakta.agents.bdi.perception.Perception
 import it.unibo.jakta.agents.dsl.JaktaForAlchemistMasScope
 import it.unibo.jakta.agents.dsl.WrappedAgent
+import it.unibo.jakta.examples.common.SwarmPosition
+import it.unibo.jakta.examples.common.destination
 import it.unibo.tuprolog.core.Atom
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
@@ -148,8 +151,7 @@ open class JaktaEnvironmentForAlchemist<P : Position<P>>(
 
     override fun getPosition(agentName: String): P = alchemistEnvironment.getPosition(node)
 
-    override val deviceId: Int
-        get() = node.id
+    override fun deviceId(agentName: String): Int = node.id
 
     override fun getTime(): Double =
         alchemistEnvironment.simulation.time.toDouble()
@@ -158,6 +160,9 @@ open class JaktaEnvironmentForAlchemist<P : Position<P>>(
         alchemistEnvironment.getNeighborhood(node)
             .map { it.id }
 
+    override fun setDesiredPosition(agentName: String, position: SwarmPosition) {
+        node.setConcentration(destination, position)
+    }
 
     companion object {
         val BROKER_MOLECULE = SimpleMolecule("MessageBroker")

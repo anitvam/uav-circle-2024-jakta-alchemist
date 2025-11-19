@@ -6,7 +6,8 @@ import it.unibo.jakta.examples.main.MainSwarmEnvironment.Companion.SIGHT_RADIUS
 fun main() {
     val e = MainSwarmEnvironment()
     e.leaderMain(SIGHT_RADIUS, SIGHT_RADIUS, FOLLOW_RADIUS)
-    for(i in 1..5)
+    for(i in 1..1)
         e.followerMain()
+
     e.mas?.start()
 }

@@ -5,7 +5,6 @@ import it.unibo.jakta.agents.bdi.messages.Message
 import it.unibo.jakta.examples.common.CircleMovement.positionInCircumference
 import it.unibo.jakta.examples.common.DronesLogic.leaderLogic
 import it.unibo.jakta.examples.common.SwarmPosition
-import it.unibo.jakta.examples.simulation.destination
 import it.unibo.tuprolog.core.Struct
 import it.unibo.tuprolog.solve.libs.oop.ObjectRef
 import kotlin.math.PI
@@ -27,7 +26,7 @@ fun MainSwarmEnvironment.leaderMain(radius: Double, sightRadius: Double, followR
                     val movement = nextPosition - initialPosition
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
                     println("[LEADER]: Next position $nextPosition")
-                    addData(destination.name, nextPosition)
+                    setDesiredPosition(sender, nextPosition)
                 }
                 action("notifyAgent", 1) {
                     val participants = getNeighborIds().toSet()
@@ -41,8 +40,9 @@ fun MainSwarmEnvironment.leaderMain(radius: Double, sightRadius: Double, followR
                 }
             }
         }
-        agent("leader") {
-            addData("id", deviceId)
+        val agentName = "leader"
+        agent(agentName) {
+            addData("id", deviceId(agentName))
             addData("sightRadius", sightRadius)
             addData("radius", radius)
             addData("followRadius", followRadius)
