@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.io.File
 import java.sql.Date
 import java.util.Calendar
 import java.util.concurrent.ConcurrentHashMap
@@ -65,16 +66,22 @@ class MainSwarmEnvironment(
             }
         }
 
+        val initTime = System.currentTimeMillis()
+        val experimentTimeInMillis = 1500 * 1000
+        val timedErrors: MutableMap<String, Double> = mutableMapOf()
         scope.launch{
             while(true) {
                 environmentLock.withLock {
                     if (realPositions.isNotEmpty()) {
-                        println(
-                            "Time: ${timestamp()}, error: ${
-                                computeDistanceError(realPositions)
-                            }"
-                        )
+                        val e = computeDistanceError(realPositions)
+                        println("Time: ${timestamp()}, error: $e")
+                        timedErrors[timestamp()] = e
                     }
+                }
+                if (System.currentTimeMillis() - initTime > experimentTimeInMillis) {
+                    saveErrorMapToCsv(timedErrors, File("data/main-execution.csv"))
+                    System.exit(0)
+                    return@launch
                 }
                 delay(1000)
 
