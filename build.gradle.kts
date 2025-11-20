@@ -33,7 +33,7 @@ val usesJvm: Int = File(File(projectDir, "docker/sim"), "Dockerfile")
     .toInt()
 
 kotlin {
-    jvmToolchain(usesJvm)
+    jvmToolchain(21)
 }
 
 dependencies {
