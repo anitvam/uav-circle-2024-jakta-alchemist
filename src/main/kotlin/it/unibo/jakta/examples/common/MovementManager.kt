@@ -11,6 +11,8 @@ import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
+import kotlin.math.sqrt
+import kotlin.random.Random
 
 val destination = SimpleMolecule("desiredPosition")
 
@@ -27,6 +29,7 @@ object CircleMovement {
     fun degreesToRadians(degrees: Int): Double {
         return degrees * PI / 180
     }
+
 }
 
 fun computeDistance(source: SwarmPosition, target: SwarmPosition): Double =
@@ -45,7 +48,7 @@ fun computeStepTowardsDestination(current: SwarmPosition, target: SwarmPosition,
     return current + SwarmPosition(dx, dy)
 }
 
-fun computeDistanceError(positions: Map<String, SwarmPosition>, environment: MainSwarmEnvironment): Double {
+fun computeDistanceError(positions: Map<String, SwarmPosition>): Double {
     val (leader, leaderPosition) = positions.filter { it.key.contains("leader") }.entries.first()
     val followersPosition = positions.filter { it.key.contains("follower") }
     val angle = (2 * PI) / followersPosition.count()
@@ -67,5 +70,15 @@ fun computeDistanceError(positions: Map<String, SwarmPosition>, environment: Mai
     return error
 }
 
+fun randomPointOnCircumference(
+    environmentSize: Double,
+): SwarmPosition {
+    require(environmentSize >= 0.0) { "radius must be non-negative" }
+    val theta = Random.nextDouble(0.0, 2 * PI)
+    val dist = Random.nextDouble(0.0, ENVIRONMENT_SIZE / 2.0)
+    val x = dist * cos(theta)
+    val y = dist * sin(theta)
+    return SwarmPosition(x, y)
+}
 
 

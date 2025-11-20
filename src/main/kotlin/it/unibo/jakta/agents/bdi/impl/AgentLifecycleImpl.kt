@@ -157,10 +157,19 @@ internal data class AgentLifecycleImpl(
                 if (newIntention.recordStack.isNotEmpty()) {
                     newIntention = newIntention.applySubstitution(externalResponse.substitution)
                 }
-                ExecutionResult(
-                    context.copy(intentions = context.intentions.updateIntention(newIntention)),
-                    externalResponse.effects,
-                )
+                try {
+                    ExecutionResult(
+                        context.copy(intentions = context.intentions.updateIntention(newIntention)),
+                        externalResponse.effects,
+                    )
+                } catch (e: RuntimeException) {
+                    System.err.println(action.signature.toString())
+                    System.err.println(externalResponse.effects)
+                    System.exit(1)
+                    throw e
+                }
+
+
             } else {
                 ExecutionResult(failAchievementGoal(intention, context))
             }

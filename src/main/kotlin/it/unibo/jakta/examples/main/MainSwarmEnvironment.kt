@@ -5,7 +5,6 @@ import it.unibo.jakta.examples.common.BdiSimulationIntegrationEnvironment
 import it.unibo.jakta.agents.bdi.Mas
 import it.unibo.jakta.agents.bdi.actions.ExternalAction
 import it.unibo.jakta.agents.bdi.dsl.MasScope
-import it.unibo.jakta.agents.bdi.dsl.actions.ExternalActionsScope
 import it.unibo.jakta.agents.bdi.environment.Environment
 import it.unibo.jakta.agents.bdi.environment.impl.EnvironmentImpl
 import it.unibo.jakta.agents.bdi.executionstrategies.ExecutionStrategy
@@ -16,25 +15,23 @@ import it.unibo.jakta.examples.common.SwarmPosition
 import it.unibo.jakta.examples.common.computeDistance
 import it.unibo.jakta.examples.common.computeDistanceError
 import it.unibo.jakta.examples.common.computeStepTowardsDestination
+import it.unibo.jakta.examples.common.randomPointOnCircumference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.apache.commons.math3.util.MathArrays
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.sql.Date
+import java.util.Calendar
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.random.Random
 
 class MainSwarmEnvironment(
-    agentIDs: Map<String, AgentID> = emptyMap(),
-    externalActions: Map<String, ExternalAction> = emptyMap(),
-    override val messageBoxes: MutableMap<AgentID, MessageQueue> = mutableMapOf(),
+    override val agentIDs: ConcurrentHashMap<String, AgentID> = ConcurrentHashMap<String, AgentID>(),
+    override val externalActions: ConcurrentHashMap<String, ExternalAction> = ConcurrentHashMap<String, ExternalAction>(),
+    override val messageBoxes: ConcurrentHashMap<AgentID, MessageQueue> = ConcurrentHashMap<AgentID, MessageQueue>(),
     perception: Perception = Perception.empty(),
-    override val data: MutableMap<String, Any> = mutableMapOf(),
+    override val data: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>(),
 ): BdiSimulationIntegrationEnvironment<SwarmPosition, Mas, MasScope>, EnvironmentImpl(
     externalActions,
     agentIDs,
@@ -44,74 +41,104 @@ class MainSwarmEnvironment(
 ) {
     var mas: Mas? = null
         private set
+
+    private val environmentLock: Mutex = Mutex()
     private val realPositions: ConcurrentHashMap<String, SwarmPosition>  = ConcurrentHashMap<String, SwarmPosition>()
-    private val desiredPositions: MutableMap<String, SwarmPosition>  = ConcurrentHashMap<String, SwarmPosition>()
-    private val actions: MutableMap<String, ExternalAction> = mutableMapOf()
-    override val externalActions: Map<String, ExternalAction>
-        get() = actions
+    private val desiredPositions: ConcurrentHashMap<String, SwarmPosition>  = ConcurrentHashMap<String, SwarmPosition>()
 
     init {
-        val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+        val scope = CoroutineScope(Dispatchers.Default)
         scope.launch {
-            val maxWalk: Double = 0.05 // Speed?
+            val maxWalk: Double = 0.5 // Speed?
             while(true) {
                 for ((agentName, desiredPosition) in desiredPositions) {
-                    val current = realPositions[agentName] ?: continue
-                    val distance = computeDistance(current, desiredPosition)
-                    if (distance > maxWalk) {
-                        val newCoords = computeStepTowardsDestination(current, desiredPosition, maxWalk)
-                        //println("Moving $agentName to $newCoords (desired position: $desiredPosition)")
-                        realPositions[agentName] = current.copy(x = newCoords.x, y = newCoords.y)
+                    environmentLock.withLock {
+                        val current = realPositions[agentName] ?: continue
+                        val distance = computeDistance(current, desiredPosition)
+                        if (distance > maxWalk) {
+                            val newCoords = computeStepTowardsDestination(current, desiredPosition, maxWalk)
+                            //println("Moving $agentName to $newCoords (desired position: $desiredPosition)")
+                            realPositions[agentName] = current.copy(x = newCoords.x, y = newCoords.y)
+                        }
                     }
                 }
             }
-            delay(500)
         }
 
         scope.launch{
             while(true) {
-                if (realPositions.isNotEmpty()) {
-                    println(
-                        "Time: ${getTime()}, error: ${
-                            computeDistanceError(realPositions, this@MainSwarmEnvironment)
-                        }"
-                    )
+                environmentLock.withLock {
+                    if (realPositions.isNotEmpty()) {
+                        println(
+                            "Time: ${timestamp()}, error: ${
+                                computeDistanceError(realPositions)
+                            }"
+                        )
+                    }
                 }
                 delay(1000)
+
             }
         }
     }
 
-    override fun deviceId(agentName: String): Int {
-        val agentIds = mas?.agents?.filter { it.name == agentName }?.map { it.agentID }
-        if (agentIds != null && agentIds.isNotEmpty()) {
-            return agentIds.first().id.toInt()
-        }
-        return -1
+    private fun timestamp(): String {
+        val date:Date = Date(System.currentTimeMillis())
+        val cal = Calendar.getInstance()
+        cal.time = date
+        val hours = cal.get(Calendar.HOUR_OF_DAY)
+        val minutes = cal.get(Calendar.MINUTE)
+        val seconds = cal.get(Calendar.SECOND)
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 
-    override fun getPosition(agentName: String): SwarmPosition = realPositions.getOrElse(agentName) {
-        println("Unknown agent: $agentName")
-        throw IllegalStateException("Unknown agent: $agentName")
+    override fun deviceId(agentName: String): Int {
+        synchronized(this) {
+            val agentIds = mas?.agents?.filter { it.name == agentName }?.map { it.agentID }
+            if (agentIds != null && agentIds.isNotEmpty()) {
+                return agentIds.first().id.toInt()
+            }
+            return -1
+        }
     }
+
+    override fun getPosition(agentName: String): SwarmPosition =
+        synchronized(this) {
+            realPositions.getOrElse(agentName) {
+                println("Unknown agent: $agentName")
+                throw IllegalStateException("Unknown agent: $agentName")
+            }
+        }
 
     override fun setDesiredPosition(agentName: String, position: SwarmPosition) {
-        desiredPositions[agentName] = position
+        synchronized(this) {
+            desiredPositions[agentName] = position
+        }
     }
 
     override fun getTime(): Double =
         System.currentTimeMillis().toDouble()
 
-    override fun getNeighborIds(): List<Int> = mas?.agents?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
+    override fun getNeighborIds(): List<Int> = synchronized(environmentLock) {
+        mas?.agents?.map { Integer.parseInt(it.agentID.id) } ?: emptyList()
+    }
 
     override fun addData(key: String, value: Any): Environment {
-        data[key] = value
-        return this
+        synchronized(environmentLock) {
+            data[key] = value
+            return this
+        }
     }
+
     fun device(f: MasScope.() -> Unit): Mas {
         val masScope = MasScope().also(f)
-        this.actions.putAll(masScope.env.externalActions)
-        this.realPositions.putAll(masScope.agents.map { it.name to SwarmPosition.random() })
+        this.externalActions.putAll(masScope.env.externalActions)
+        this.realPositions.putAll(masScope.agents.map {
+            when (it.name.contains("leader")) {
+                true -> it.name to SwarmPosition(0.0, 0.0)
+                else -> it.name to randomPointOnCircumference(ENVIRONMENT_SIZE)
+            }
+        })
         println(realPositions)
         if (mas == null) {
             mas = masScope.environment(this).build()
@@ -128,38 +155,42 @@ class MainSwarmEnvironment(
     }
 
     override fun broadcastMessage(message: Message): Environment {
-        val myPosition = realPositions[message.from] ?: return this
-        val neighbors = realPositions
-            .filterNot { message.from == it.key }
-            .filter {
-                val distance = MathArrays.distance(
-                    doubleArrayOf(myPosition.x, myPosition.y),
-                    doubleArrayOf(it.value.x, it.value.y)
-                )
-                distance < SIGHT_RADIUS
-            }
-            .map { it.key.substringAfter("@") }
+        synchronized(this) {
+            val myPosition = realPositions[message.from] ?: return this
+            val neighbors = realPositions
+                .filterNot { message.from == it.key }
+                .map {
+                    it to computeDistance(myPosition, it.value)
+                }
+                .filter { it.second < SIGHT_RADIUS }
+                .map { it.first.key.substringAfter("@") }
             if (neighbors.isEmpty()) return this
+            //println("Reaching: $neighbors")
             for (neighbor in neighbors) {
                 messageBoxes[AgentID(neighbor)] = messageBoxes[AgentID(neighbor)]?.plus(message)
                     ?: listOf(message)
             }
             return this
+        }
     }
 
     private fun gatherIdFromAgentName(agentName: String): AgentID =
         AgentID(agentName.substringAfter("@"))
 
     override fun getNextMessage(agentName: String): Message? =
-        messageBoxes[gatherIdFromAgentName(agentName)]?.lastOrNull()
+        synchronized(this) {
+            messageBoxes[gatherIdFromAgentName(agentName)]?.lastOrNull()
+        }
 
     override fun popMessage(agentName: String): Environment {
-        val message = getNextMessage(agentName)
-        val agentMessageBox = messageBoxes[gatherIdFromAgentName(agentName)]
-        if (agentMessageBox != null && message != null) {
-            messageBoxes[gatherIdFromAgentName(agentName)] = agentMessageBox - message
+        synchronized(this) {
+            val message = getNextMessage(agentName)
+            val agentMessageBox = messageBoxes[gatherIdFromAgentName(agentName)]
+            if (agentMessageBox != null && message != null) {
+                messageBoxes[gatherIdFromAgentName(agentName)] = agentMessageBox - message
+            }
+            return this
         }
-        return this
     }
 
     override fun copy(
