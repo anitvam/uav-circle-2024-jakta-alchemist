@@ -31,7 +31,6 @@ fun <P : Position<P>> JaktaEnvironmentForAlchemist<P>.leader(radius: Double, sig
 
                     val movement = nextPosition - initialPosition
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
-                    println("[LEADER]: Next position $nextPosition")
                     setDesiredPosition(sender, nextPosition)
                 }
                 action("notifyAgent", 1) {

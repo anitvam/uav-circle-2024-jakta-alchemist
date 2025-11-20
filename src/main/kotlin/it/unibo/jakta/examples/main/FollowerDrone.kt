@@ -27,7 +27,6 @@ fun MainSwarmEnvironment.followerMain() =
                     val movement = destinationPosition - myPosition
                     // set Node property in the environment
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
-                    //println("[$sender]: Next position $destinationPosition")
                     setDesiredPosition(sender, destinationPosition)
                 }
             }

@@ -25,7 +25,6 @@ fun MainSwarmEnvironment.leaderMain(radius: Double, sightRadius: Double, followR
 
                     val movement = nextPosition - initialPosition
                     addData("velocity", doubleArrayOf(movement.x, movement.y))
-                    //println("[LEADER]: Next position $nextPosition")
                     setDesiredPosition(sender, nextPosition)
                 }
                 action("notifyAgent", 1) {
