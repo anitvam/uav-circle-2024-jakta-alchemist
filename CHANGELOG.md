@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.2.0...1.2.1) (2025-11-21)
+
+### Bug Fixes
+
+* change raw error samples in a scatter plot ([025bac5](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/025bac52ad2a2ff3cc2ff8c0a99b750ac223ee72))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.2.0 [skip ci] ([756c4f3](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/756c4f3b3277189054ae2831bdd4dd6503c62047))
+
 ## [1.2.0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.1.0...1.2.0) (2025-11-21)
 
 ### Features
