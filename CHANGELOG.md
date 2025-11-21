@@ -1,3 +1,26 @@
+## [1.2.0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.1.0...1.2.0) (2025-11-21)
+
+### Features
+
+* fix movement speed according to 1m/s and generate main execution data ([f9a6566](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/f9a65667c5ab4665271c2815e124a187243805c2))
+
+### Dependency updates
+
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.156 ([#509](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/issues/509)) ([b43d5cb](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/b43d5cb73a3083fd45564116bce49797fe4bda4d))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.157 ([#517](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/issues/517)) ([ec66c88](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/ec66c8831ea9a16e8f101ad73d2abbd6fca98477))
+* **deps:** update dependency xarray to v2025.11.0 ([125f5cf](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/125f5cf453d0185771b161c6702e26e1a799a657))
+* **deps:** update kotest to v6.0.5 ([99c3cef](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/99c3cefa07b7fa13654cd46a4de8b5739ee3f390))
+* **deps:** update plugin gitsemver to v7.0.7 ([e8362a6](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/e8362a603108a7c446630fb58d5a5e722c83006d))
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v5.0.1 ([a0052ae](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a0052ae89367f18c14835d39cebd17cd7899f7a2))
+* **deps:** update actions/checkout action to v6 ([394c5e4](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/394c5e47e8e1ac46b103e77193a0fe2efc9728a8))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.0 [skip ci] ([a8cbf66](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/a8cbf6642d2acd33d708cb2cc82942bc0f1995c8))
+
 ## [1.1.0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.0.4...1.1.0) (2025-11-20)
 
 ### Features
