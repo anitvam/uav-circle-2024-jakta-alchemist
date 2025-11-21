@@ -543,8 +543,8 @@ if __name__ == '__main__':
         # ---- Plot ----
 
         plt.figure(figsize=(8, 4))
-        plt.plot(df["seconds_elapsed"], df['error'], label="Error raw samples", color=viridis(0.99)) ## Original
-        plt.plot(df["seconds_elapsed"], smoothed, label="Error rolling average on a 10s window", color=viridis(0.22)) ## Smoothed
+        plt.scatter(df["seconds_elapsed"], df['error'], label="Error samples", color=viridis(0.99), s=10) ## Original
+        plt.plot(df["seconds_elapsed"], smoothed, label="10s-window moving average", color=viridis(0.22)) ## Smoothed
         plt.xlabel('Time (seconds)')
         plt.ylabel('Squared Distance Error ($ m^2 $)')
         #plt.title('Error Over Time When Executing on a Concurrent Environment')
