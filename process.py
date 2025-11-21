@@ -529,5 +529,31 @@ if __name__ == '__main__':
 
     # Create plots
 
-    error_over_time_charts_flattened(means, stdevs)
-    error_over_variance(means, stdevs)
+    #error_over_time_charts_flattened(means, stdevs)
+    #error_over_variance(means, stdevs)
+
+    def main_execution_line_chart():
+        import pandas as pd
+        viridis = plt.colormaps['viridis']
+        df = pd.read_csv('data/main-execution.csv')
+        # Convert time strings (HH:MM:SS) to datetime objects
+        df['time'] = pd.to_datetime(df['time'], format='%H:%M:%S')
+        df["seconds_elapsed"] = (df['time'] - df['time'].iloc[0]).dt.total_seconds()
+        smoothed = pd.Series(df['error']).rolling(window=10, center=True).mean()
+        smoothed2 = pd.Series(df['error']).rolling(window=15, center=True).mean()
+        # ---- Plot ----
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(df["seconds_elapsed"], df['error'], label="original", color=viridis(0.99)) ## Original
+        plt.plot(df["seconds_elapsed"], smoothed, label="smoothed", color=viridis(0.66)) ## Smoothed
+        plt.plot(df["seconds_elapsed"], smoothed2, label="smoothed", color=viridis(0.22)) ## Smoothed
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Error')
+        plt.title('Error Over Time When Executing on a Concurrent Environment')
+        plt.tight_layout()
+        plt.margins(x=0)
+        plt.autoscale(enable=True, tight=True)
+        Path(f'{output_directory}').mkdir(parents=True, exist_ok=True)
+        plt.savefig(f'{output_directory}/main_execution_line_chart.pdf')
+
+    main_execution_line_chart()

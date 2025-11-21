@@ -50,8 +50,10 @@ class MainSwarmEnvironment(
     init {
         val scope = CoroutineScope(Dispatchers.Default)
         scope.launch {
-            val maxWalk: Double = 0.5 // Speed?
+            var initialTime = System.currentTimeMillis()
             while(true) {
+                val now = System.currentTimeMillis()
+                val maxWalk: Double = 1.0 * (now - initialTime)
                 for ((agentName, desiredPosition) in desiredPositions) {
                     environmentLock.withLock {
                         val current = realPositions[agentName] ?: continue
@@ -63,6 +65,7 @@ class MainSwarmEnvironment(
                         }
                     }
                 }
+                initialTime = now
             }
         }
 
