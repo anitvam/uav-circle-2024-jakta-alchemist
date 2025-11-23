@@ -149,7 +149,6 @@ class MainSwarmEnvironment(
                 else -> it.name to randomPointOnCircumference(ENVIRONMENT_SIZE)
             }
         })
-        println(realPositions)
         if (mas == null) {
             mas = masScope.environment(this).build()
         } else {
