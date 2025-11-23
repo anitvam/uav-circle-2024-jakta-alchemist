@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.provideDelegate
 import java.awt.GraphicsEnvironment
 import java.io.ByteArrayOutputStream
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -12,15 +13,9 @@ plugins {
 repositories {
     mavenCentral()
 }
-/*
- * Only required if you plan to use Protelis, remove otherwise
- */
-sourceSets {
-    main {
-        resources {
-            srcDir("src/main/protelis")
-        }
-    }
+
+application {
+    mainClass = "it.unibo.jakta.examples.main.SwarmExecutionMainKt"
 }
 
 val usesJvm: Int = File(File(projectDir, "docker/sim"), "Dockerfile")
@@ -142,3 +137,4 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.compilerOptions {
     freeCompilerArgs.set(listOf("-Xcontext-parameters"))
 }
+
