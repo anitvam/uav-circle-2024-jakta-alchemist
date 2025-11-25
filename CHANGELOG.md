@@ -1,3 +1,23 @@
+## [1.3.0](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.2.1...1.3.0) (2025-11-25)
+
+### Features
+
+* remove protelis since not used in the project and add main entrypoint ([3d94f08](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/3d94f0809debaf22f58d03ecc4c1a788d7185d29))
+
+### Bug Fixes
+
+* remove position log ([6069035](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/60690350dd11a959a587e7b5c436ee44a77aed4e))
+
+### Build and continuous integration
+
+* **deps:** update actions/setup-python action to v6.1.0 ([#518](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/issues/518)) ([26372e2](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/26372e2fc3a4288dc5f6a642e69ac20cb13be670))
+
+### General maintenance
+
+* package restructure ([64da764](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/64da764f50e2993d8f47d2aa5345c479350fd5c7))
+* **release:** update gradle.properties .env versions to 1.2.1 [skip ci] ([6fa0cd3](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/6fa0cd35b9f1e0c7d1e0ca50c55f88bbfad12a5f))
+* remove unused generics from BdiSimulationIntegrationEnvironment interface ([7793041](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/commit/779304196397c6609fd757f7b0c2f30da355d8f6))
+
 ## [1.2.1](https://github.com/anitvam/uav-circle-2024-jakta-alchemist/compare/1.2.0...1.2.1) (2025-11-21)
 
 ### Bug Fixes
