@@ -33,7 +33,7 @@ class MainSwarmEnvironment(
     override val messageBoxes: ConcurrentHashMap<AgentID, MessageQueue> = ConcurrentHashMap<AgentID, MessageQueue>(),
     perception: Perception = Perception.empty(),
     override val data: ConcurrentHashMap<String, Any> = ConcurrentHashMap<String, Any>(),
-): BdiSimulationIntegrationEnvironment<SwarmPosition, Mas, MasScope>, EnvironmentImpl(
+): BdiSimulationIntegrationEnvironment<SwarmPosition>, EnvironmentImpl(
     externalActions,
     agentIDs,
     messageBoxes,

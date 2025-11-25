@@ -4,11 +4,7 @@ import it.unibo.jakta.agents.bdi.dsl.Builder
 import it.unibo.jakta.agents.bdi.dsl.actions.ExternalActionsScope
 import it.unibo.jakta.agents.bdi.environment.Environment
 
-interface BdiSimulationIntegrationEnvironment<
-    P: Any,
-    Building: Any,
-    B: Builder<Building>,
->: Environment {
+interface BdiSimulationIntegrationEnvironment<P: Any>: Environment {
 
     fun setDesiredPosition(agentName: String, position: SwarmPosition)
 

@@ -40,7 +40,7 @@ open class JaktaEnvironmentForAlchemist<P : Position<P>>(
     override val node: Node<Any?>,
     // Jakta Environment inheritance
     override val messageBoxes: Map<AgentID, MessageQueue> = emptyMap(),
-) : JaktaEnvironment, NodeProperty<Any?>, BdiSimulationIntegrationEnvironment<P, WrappedAgent, JaktaForAlchemistMasScope> {
+) : JaktaEnvironment, NodeProperty<Any?>, BdiSimulationIntegrationEnvironment<P> {
 
     override val agentIDs: Map<String, AgentID> get() =
         node.reactions.asSequence()
