@@ -1,3 +1,4 @@
+
 package it.unibo.alchemist.jakta
 
 import it.unibo.alchemist.jakta.properties.JaktaEnvironmentForAlchemist

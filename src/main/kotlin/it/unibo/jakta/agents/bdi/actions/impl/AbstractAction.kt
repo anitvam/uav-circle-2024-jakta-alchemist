@@ -5,7 +5,6 @@ import it.unibo.jakta.agents.bdi.actions.ActionRequest
 import it.unibo.jakta.agents.bdi.actions.ActionResponse
 import it.unibo.jakta.agents.bdi.actions.effects.SideEffect
 import it.unibo.tuprolog.core.Substitution
-import it.unibo.tuprolog.core.Substitution.Companion
 import it.unibo.tuprolog.solve.Signature
 import java.lang.IllegalArgumentException
 import java.util.Collections
@@ -14,7 +13,7 @@ abstract class AbstractAction<C : SideEffect, Res : ActionResponse<C>, Req : Act
     override val signature: Signature,
 ) : Action<C, Res, Req> {
 
-    protected var result: Substitution = Substitution.empty()
+    protected var result: Substitution = Substitution.Companion.empty()
 
     protected val effects: MutableList<C> = Collections.synchronizedList(mutableListOf())
 
