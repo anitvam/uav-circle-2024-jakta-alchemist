@@ -241,6 +241,12 @@ The experiment can be run in three four ways:
     - `python process.py`
 5. The charts will be available in the `charts` folder.
 
+> The batch execution by default will run the experiment with 16 drones, 
+> and will run the simulation with the combination of:
+> - `f = [1, 2, 3, 4, 5]` and 
+> - `τ = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]`
+
+
 #### Reproduce concurrent execution natively
 Follow the steps described for the simulation execution,
 but instead of executing the gradle tasks described in 3, 
@@ -257,18 +263,21 @@ launch `./gradlew run`.
     - `gradlew.bat <task>` on Windows cmd or Powershell;
 
 Depending on the granularity to execute, the `<task>` to be specified is:
-- `run1-agent-phase`
-- `run2-agent-lc`
-- `run3-sync-mas`
+- `run1-agent-phaseGraphic`
+- `run2-agent-lcGraphic`
+- `run3-sync-masGraphic`
 
 To start the simulation press `P`, you are free to pause/resume it by pressing `P` on keyboard.
 
 The graphical execution launches the simulation with default values for the free variables and the random seed,
 this can behaviour can be manually customized by changing the configuration in the corresponding `yml` file.
 
+> The number of UAVs chosen for the __graphical__ execution is 6 since allows for better UI visualization.
+> This number can be freely modified in the yaml file.
+
 Currently default values for variables for graphical execution are:
 - _variance_ (`τ`): 0.6 
-- _f_: 1
+- _agentFrequency_ (`f`): 1
 - _numberOfDrones_: 6
 
 To make changes to existing experiments and explore/reuse,
